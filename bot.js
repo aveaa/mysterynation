@@ -496,23 +496,6 @@ client.on("message", async message => {
         message.delete();
     }, 'hid');
 
-    add_command(['invites', 'приглашения'], false, message, command, args, 'e', null, function () {
-        message.guild.fetchInvites().then(invites => {
-            let invites_list = '';
-            invites.filter(invite => invite.inviter.id === message.author.id).forEach((item) => {
-                invites_list = invites_list + item.code + ' – ';
-                if (item.temporary) {invites_list = invites_list + 'до ' + item.expiresAt + ', '} else {invites_list = invites_list + '∞ срок действия, '}
-                invites_list = invites_list + ' ' + item.uses + ' ' + declOfNum(item.uses, ['использование', 'использования', 'использований']) + '\n';
-            });
-            const embed = new Discord.RichEmbed()
-                .setTitle('Ваши ссылки-приглашения:')
-                .setDescription(invites_list)
-                .setFooter(message.guild.name);
-            message.author.send({embed});
-            message.delete();
-        });
-    }, '', 'увидеть свои ссылки-приглашения');
-	
 	add_command(['us'], false, message, command, args, 'roles', [rule.moder], function () {
         if (message.guild.members.get === undefined) {
             return message.channel.send({embed: embed_error(`Ошибка отправки сообщения`)});
