@@ -168,9 +168,7 @@ client.on('ready', () => {
 	console.log('//------------------//');
     console.log('Бот запущен успешно.');
     console.log('- Авторизован как ' + client.user.tag);
-    console.log('- Бот является участником ' + client.guilds.size + ' ' + declOfNum(client.guilds.size, ['сервера', 'серверов', 'серверов']));
     console.log('//------------------//');
-    });
 	client.user.setPresence({ game: { name: `по сторонам`, type: 3 } }).catch();
 });
 
