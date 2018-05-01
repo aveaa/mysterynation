@@ -515,7 +515,7 @@ client.on("message", async message => {
         });
     }, '', 'увидеть свои ссылки-приглашения');
 	
-	add_command(['us'], false, message, command, args, 'roles', [rule.moder]], function () {
+	add_command(['us'], false, message, command, args, 'roles', [rule.moder], function () {
         if (message.guild.members.get === undefined) {
             return message.channel.send({embed: embed_error(`Ошибка отправки сообщения`)});
         }
