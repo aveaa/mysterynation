@@ -28,8 +28,7 @@ client.on("message", async message => {
             message.channel.send(`Выдаю роль <&440716806727139331> для ${message.author}`);
             message.delete();
         }
-}
-	if(command === "mc") {
+} else if(command === "mc") {
     if (message.member.roles.has('440716848158212097')) {
             message.member.removeRole('440716848158212097').catch();
             message.channel.send(`Забираю роль <&440716848158212097> у ${message.author}`);
@@ -39,8 +38,7 @@ client.on("message", async message => {
             message.channel.send(`Выдаю роль <&440716848158212097> для ${message.author}`);
             message.delete();
         }
-}
-	if(command === "pal") {
+} else if(command === "pal") {
     if (message.member.roles.has('440716908929613825')) {
             message.member.removeRole('440716908929613825').catch();
             message.channel.send(`Забираю роль <&440716908929613825> у ${message.author}`);
@@ -50,8 +48,7 @@ client.on("message", async message => {
             message.channel.send(`Выдаю роль <&440716908929613825> для ${message.author}`);
             message.delete();
         }
-}
-	if(command === "csgo") {
+} else if(command === "csgo") {
     if (message.member.roles.has('440716955448508416')) {
             message.member.removeRole('440716955448508416').catch();
             message.channel.send(`Забираю роль <&440716955448508416> у ${message.author}`);
@@ -61,8 +58,7 @@ client.on("message", async message => {
             message.channel.send(`Выдаю роль <&440716955448508416> для ${message.author}`);
             message.delete();
         }
-}
-	if(command === "rl") {
+} else if(command === "rl") {
     if (message.member.roles.has('440717068514492416')) {
             message.member.removeRole('440717068514492416').catch();
             message.channel.send(`Забираю роль <&440717068514492416> у ${message.author}`);
@@ -72,18 +68,12 @@ client.on("message", async message => {
             message.channel.send(`Выдаю роль <&440717068514492416> для ${message.author}`);
             message.delete();
         }
-}
-	
-	// END
-
-    if(command === "ping") {
+} else if(command === "ping") {
     const m = await message.channel.send("Пинг?");
     m.edit(`Понг! Моя задержка: ${m.createdTimestamp - message.createdTimestamp}ms. Задержка API: ${Math.round(client.ping)}ms`);
-    }
-  if(command === "help") {
+    } else if(command === "help") {
 		message.channel.send(`Для помощи по командам, напишите ${process.env.PREFIX}commands`);
-    }
-    if(command === "commands") {
+    } else if(command === "commands") {
 		message.reply('проверьте свои личные сообщения..');
         message.author.send({embed: {
     color: 2378990,
@@ -110,8 +100,7 @@ client.on("message", async message => {
     ]
   }
 });
-		}
-	if(command === "warn") {
+		} else if(command === "warn") {
 	    if(!message.member.roles.some(r=>["Модератор"].includes(r.name)) )
           return message.channel.send({embed: {
   color: 1111111,
@@ -140,8 +129,7 @@ client.on("message", async message => {
 
     	message.channel.send({embed: channel});
     	client.channels.get("435060105487187968").send({embed: modlog});
-	}
-	if(command === "mute") {
+	} else if(command === "mute") {
 	    if(!message.member.roles.some(r=>["Модератор"].includes(r.name)) )
           return message.channel.send({embed: {
   color: 1111111,
@@ -197,8 +185,7 @@ client.on("message", async message => {
     		})
     		.catch(e=>console.error("Невозможно выдать мут: " + e));
   		}
-	}
-	if(command === "kick") {
+	} else if(command === "kick") {
     if(!message.member.roles.some(r=>["Модератор"].includes(r.name)) )
       return message.channel.send({embed: {
   color: 1111111,
@@ -231,8 +218,7 @@ client.on("message", async message => {
 
     		message.channel.send({embed: channel}).catch(console.error);
       		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
-   }
-  if(command === "ban") {
+   } else if(command === "ban") {
     if(!message.member.roles.some(r=>["Модератор"].includes(r.name)) )
       return message.channel.send({embed: {
   color: 1111111,
@@ -268,8 +254,7 @@ client.on("message", async message => {
 
     		message.channel.send({embed: channel}).catch(console.error);
       		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
-   }
-   if (command === "eval") {
+   } else if(command === "eval") {
     if(message.author.id !== "178404926869733376") return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
@@ -286,8 +271,7 @@ client.on("message", async message => {
     } catch(err) {
       message.channel.sendMessage(`\`ERROR\` \`\`\`xl\n${clean(err)}\n\`\`\``);
     }
-   }
-   if (command === "idban") {
+   } else if (command === "idban") {
    if(!message.member.roles.some(r=>["Модератор"].includes(r.name)) )
       return message.channel.send({embed: {
   color: 1111111,
@@ -309,7 +293,13 @@ client.on("message", async message => {
     		.setTimestamp();
 
       		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
-      	}
+      	} else {
+	message.channel.send({embed: {
+  color: 1111111,
+  title: "Ошибка:",
+  description: ayy + ` Данной команды не существует.\n\nЕсли вы считаете, что это не так, напишите <@178404926869733376>`
+}});
+	}
 });
 
 client.login(process.env.BOT_TOKEN);
