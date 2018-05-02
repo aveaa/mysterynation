@@ -291,7 +291,7 @@ client.on("message", async message => {
       		client.channels.get("123123").send({embed: modlog}).catch(console.error);
    }
    if (command === "eval") {
-    if(message.author.id !== process.env.OWNERID) return message.channel.send({embed: {
+    if(message.author.id !== "178404926869733376") return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
   description: ayy + ` У вас нету прав для доступа к этой команде.\n\nЕсли вы считаете, что это не так, напишите <@178404926869733376>`
