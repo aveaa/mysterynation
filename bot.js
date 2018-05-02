@@ -72,20 +72,6 @@ client.on("message", async message => {
     		.setFooter("MysteryNation")
     		.setTimestamp();
 
-    		const author = new Discord.RichEmbed()
-    		.setTitle('Предупреждение:')
-    		.setColor("#ee83ac")
-    		.setDescription(`Пользователю ${member.user.tag} был выдан варн модератором ${message.author.tag}, причина: ${reason}`)
-    		.setFooter("MysteryNation")
-    		.setTimestamp();
-
-    		const member1 = new Discord.RichEmbed()
-    		.setTitle('Предупреждение:')
-    		.setColor("#ee83ac")
-    		.setDescription(`Пользователю ${member.user.tag} был выдан варн модератором ${message.author.tag}, причина: ${reason}`)
-    		.setFooter("MysteryNation")
-    		.setTimestamp();
-
     		const modlog = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
@@ -94,8 +80,6 @@ client.on("message", async message => {
     		.setTimestamp();
 
     	message.channel.send({embed: channel});
-    	message.author.send({embed: author});
-    	message.member.send({embed: member1});
     	client.channels.get("435060105487187968").send({embed: modlog});
 	}
 	if(command === "mute") {
@@ -118,20 +102,6 @@ client.on("message", async message => {
     		.setFooter("MysteryNation")
     		.setTimestamp();
 
-    		const author = new Discord.RichEmbed()
-    		.setTitle('Предупреждение:')
-    		.setColor("#ee83ac")
-    		.setDescription(`Пользователю ${member.user.tag} был заблокирован чат модератором ${message.author.tag}, причина: ${reason}`)
-    		.setFooter("MysteryNation")
-    		.setTimestamp();
-
-    		const member11 = new Discord.RichEmbed()
-    		.setTitle('Предупреждение:')
-    		.setColor("#ee83ac")
-    		.setDescription(`Пользователю ${member.user.tag} был заблокирован чат модератором ${message.author.tag}, причина: ${reason}`)
-    		.setFooter("MysteryNation")
-    		.setTimestamp();
-
     		const modlog = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
@@ -140,20 +110,6 @@ client.on("message", async message => {
     		.setTimestamp();
 
     		const channel1 = new Discord.RichEmbed()
-    		.setTitle('Предупреждение:')
-    		.setColor("#ee83ac")
-    		.setDescription(`Пользователю ${member.user.tag} был разблокирован чат модератором ${message.author.tag}`)
-    		.setFooter("MysteryNation")
-    		.setTimestamp();
-
-    		const author1 = new Discord.RichEmbed()
-    		.setTitle('Предупреждение:')
-    		.setColor("#ee83ac")
-    		.setDescription(`Пользователю ${member.user.tag} был разблокирован чат модератором ${message.author.tag}`)
-    		.setFooter("MysteryNation")
-    		.setTimestamp();
-
-    		const member1 = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователю ${member.user.tag} был разблокирован чат модератором ${message.author.tag}`)
@@ -172,16 +128,12 @@ client.on("message", async message => {
   		if (member.roles.has(muteRole.id)) {
     		member.removeRole(muteRole).then(() => {
       		message.channel.send({embed: channel1}).catch(console.error);
-      		message.author.send({embed: author1}).catch(console.error);
-      		message.member.send({embed: member1}).catch(console.error);
       		client.channels.get("435060105487187968").send({embed: modlog1}).catch(console.error);
     		})
     		.catch(e=>console.error("Невозможно размутить: " + e));
   		} else {
    	 		member.addRole(muteRole).then(() => {
       		message.channel.send({embed: channel}).catch(console.error);
-      		message.author.send({embed: author}).catch(console.error);
-      		message.member.send({embed: member11}).catch(console.error);
       		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
     		})
     		.catch(e=>console.error("Невозможно выдать мут: " + e));
@@ -211,20 +163,6 @@ client.on("message", async message => {
     		.setFooter("MysteryNation")
     		.setTimestamp();
 
-    		const author = new Discord.RichEmbed()
-    		.setTitle('Предупреждение:')
-    		.setColor("#ee83ac")
-    		.setDescription(`Пользователь ${member.user.tag} был кикнут модератором ${message.author.tag}, причина: "${reason}"`)
-    		.setFooter("MysteryNation")
-    		.setTimestamp();
-
-    		const member1 = new Discord.RichEmbed()
-    		.setTitle('Предупреждение:')
-    		.setColor("#ee83ac")
-    		.setDescription(`Пользователь ${member.user.tag} был кикнут модератором ${message.author.tag}, причина: "${reason}"`)
-    		.setFooter("MysteryNation")
-    		.setTimestamp();
-
     		const modlog = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
@@ -233,8 +171,6 @@ client.on("message", async message => {
     		.setTimestamp();
 
     		message.channel.send({embed: channel}).catch(console.error);
-      		message.author.send({embed: author}).catch(console.error);
-      		message.member.send({embed: member1}).catch(console.error);
       		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
    }
   if(command === "ban") {
@@ -264,20 +200,6 @@ client.on("message", async message => {
     		.setFooter("MysteryNation")
     		.setTimestamp();
 
-    		const author = new Discord.RichEmbed()
-    		.setTitle('Предупреждение:')
-    		.setColor("#ee83ac")
-    		.setDescription(`Пользователь ${member.user.tag} был забанен модератором ${message.author.tag}, причина: "${reason}"`)
-    		.setFooter("MysteryNation")
-    		.setTimestamp();
-
-    		const member1 = new Discord.RichEmbed()
-    		.setTitle('Предупреждение:')
-    		.setColor("#ee83ac")
-    		.setDescription(`Пользователь ${member.user.tag} был забанен модератором ${message.author.tag}, причина: "${reason}"`)
-    		.setFooter("MysteryNation")
-    		.setTimestamp();
-
     		const modlog = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
@@ -286,8 +208,6 @@ client.on("message", async message => {
     		.setTimestamp();
 
     		message.channel.send({embed: channel}).catch(console.error);
-      		message.author.send({embed: author}).catch(console.error);
-      		message.member.send({embed: member1}).catch(console.error);
       		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
    }
    if (command === "eval") {
