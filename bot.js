@@ -21,51 +21,51 @@ client.on("message", async message => {
 	if(command === "o") {
     if (message.member.roles.has('440716806727139331')) {
             message.member.removeRole('440716806727139331').catch();
-            message.channel.send(`Забираю роль <&440716806727139331> у ${message.author}`);
+            message.channel.send(`Забираю роль osu! у ${message.author}`);
             message.delete();
         } else {
             message.member.addRole('440716806727139331').catch();
-            message.channel.send(`Выдаю роль <&440716806727139331> для ${message.author}`);
+            message.channel.send(`Выдаю роль osu! для ${message.author}`);
             message.delete();
         }
 } else if(command === "mc") {
     if (message.member.roles.has('440716848158212097')) {
             message.member.removeRole('440716848158212097').catch();
-            message.channel.send(`Забираю роль <&440716848158212097> у ${message.author}`);
+            message.channel.send(`Забираю роль Minecraft у ${message.author}`);
             message.delete();
         } else {
             message.member.addRole('440716848158212097').catch();
-            message.channel.send(`Выдаю роль <&440716848158212097> для ${message.author}`);
+            message.channel.send(`Выдаю роль Minecraft для ${message.author}`);
             message.delete();
         }
 } else if(command === "pal") {
     if (message.member.roles.has('440716908929613825')) {
             message.member.removeRole('440716908929613825').catch();
-            message.channel.send(`Забираю роль <&440716908929613825> у ${message.author}`);
+            message.channel.send(`Забираю роль Paladins у ${message.author}`);
             message.delete();
         } else {
             message.member.addRole('440716908929613825').catch();
-            message.channel.send(`Выдаю роль <&440716908929613825> для ${message.author}`);
+            message.channel.send(`Выдаю роль Paladins для ${message.author}`);
             message.delete();
         }
 } else if(command === "csgo") {
     if (message.member.roles.has('440716955448508416')) {
             message.member.removeRole('440716955448508416').catch();
-            message.channel.send(`Забираю роль <&440716955448508416> у ${message.author}`);
+            message.channel.send(`Забираю роль Counter Strike: Global Offensive у ${message.author}`);
             message.delete();
         } else {
             message.member.addRole('440716955448508416').catch();
-            message.channel.send(`Выдаю роль <&440716955448508416> для ${message.author}`);
+            message.channel.send(`Выдаю роль Counter Strike: Global Offensive для ${message.author}`);
             message.delete();
         }
 } else if(command === "rl") {
     if (message.member.roles.has('440717068514492416')) {
             message.member.removeRole('440717068514492416').catch();
-            message.channel.send(`Забираю роль <&440717068514492416> у ${message.author}`);
+            message.channel.send(`Забираю роль Rocket League у ${message.author}`);
             message.delete();
         } else {
             message.member.addRole('440717068514492416').catch();
-            message.channel.send(`Выдаю роль <&440717068514492416> для ${message.author}`);
+            message.channel.send(`Выдаю роль Rocket League для ${message.author}`);
             message.delete();
         }
 } else if(command === "ping") {
