@@ -16,6 +16,65 @@ client.on("message", async message => {
   if(message.content.indexOf(process.env.PREFIX) !== 0) return;
   const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
+	
+	// Game commands
+	if(command === "o") {
+    if (message.member.roles.has('440716806727139331')) {
+            message.member.removeRole('440716806727139331').catch();
+            message.channel.send(`Забираю роль <&440716806727139331> у ${message.author}`);
+            message.delete();
+        } else {
+            message.member.addRole('440716806727139331').catch();
+            message.channel.send(`Выдаю роль <&440716806727139331> для ${message.author}`);
+            message.delete();
+        }
+}
+	if(command === "mc") {
+    if (message.member.roles.has('440716848158212097')) {
+            message.member.removeRole('440716848158212097').catch();
+            message.channel.send(`Забираю роль <&440716848158212097> у ${message.author}`);
+            message.delete();
+        } else {
+            message.member.addRole('440716848158212097').catch();
+            message.channel.send(`Выдаю роль <&440716848158212097> для ${message.author}`);
+            message.delete();
+        }
+}
+	if(command === "pal") {
+    if (message.member.roles.has('440716908929613825')) {
+            message.member.removeRole('440716908929613825').catch();
+            message.channel.send(`Забираю роль <&440716908929613825> у ${message.author}`);
+            message.delete();
+        } else {
+            message.member.addRole('440716908929613825').catch();
+            message.channel.send(`Выдаю роль <&440716908929613825> для ${message.author}`);
+            message.delete();
+        }
+}
+	if(command === "csgo") {
+    if (message.member.roles.has('440716955448508416')) {
+            message.member.removeRole('440716955448508416').catch();
+            message.channel.send(`Забираю роль <&440716955448508416> у ${message.author}`);
+            message.delete();
+        } else {
+            message.member.addRole('440716955448508416').catch();
+            message.channel.send(`Выдаю роль <&440716955448508416> для ${message.author}`);
+            message.delete();
+        }
+}
+	if(command === "rl") {
+    if (message.member.roles.has('440717068514492416')) {
+            message.member.removeRole('440717068514492416').catch();
+            message.channel.send(`Забираю роль <&440717068514492416> у ${message.author}`);
+            message.delete();
+        } else {
+            message.member.addRole('440717068514492416').catch();
+            message.channel.send(`Выдаю роль <&440717068514492416> для ${message.author}`);
+            message.delete();
+        }
+}
+	
+	// END
 
     if(command === "ping") {
     const m = await message.channel.send("Пинг?");
