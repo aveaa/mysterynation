@@ -79,7 +79,7 @@ client.on("message", async message => {
     		.setFooter("MysteryNation")
     		.setTimestamp();
 
-    		const member = new Discord.RichEmbed()
+    		const member1 = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователю ${member.user.tag} был выдан варн модератором ${message.author.tag}, причина: ${reason}`)
@@ -95,8 +95,8 @@ client.on("message", async message => {
 
     	message.channel.send({embed: channel});
     	message.author.send({embed: author});
-    	message.member.send({embed: member});
-    	client.channels.get("123123").send({embed: channel});
+    	message.member.send({embed: member1});
+    	client.channels.get("435060105487187968").send({embed: modlog});
 	}
 	if(command === "mute") {
 	    if(!message.member.roles.some(r=>["Модератор"].includes(r.name)) )
@@ -125,7 +125,7 @@ client.on("message", async message => {
     		.setFooter("MysteryNation")
     		.setTimestamp();
 
-    		const member = new Discord.RichEmbed()
+    		const member11 = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователю ${member.user.tag} был заблокирован чат модератором ${message.author.tag}, причина: ${reason}`)
@@ -174,15 +174,15 @@ client.on("message", async message => {
       		message.channel.send({embed: channel1}).catch(console.error);
       		message.author.send({embed: author1}).catch(console.error);
       		message.member.send({embed: member1}).catch(console.error);
-      		client.channels.get("123123").send({embed: modlog1}).catch(console.error);
+      		client.channels.get("435060105487187968").send({embed: modlog1}).catch(console.error);
     		})
     		.catch(e=>console.error("Невозможно размутить: " + e));
   		} else {
    	 		member.addRole(muteRole).then(() => {
       		message.channel.send({embed: channel}).catch(console.error);
       		message.author.send({embed: author}).catch(console.error);
-      		message.member.send({embed: member}).catch(console.error);
-      		client.channels.get("123123").send({embed: modlog}).catch(console.error);
+      		message.member.send({embed: member11}).catch(console.error);
+      		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
     		})
     		.catch(e=>console.error("Невозможно выдать мут: " + e));
   		}
@@ -218,7 +218,7 @@ client.on("message", async message => {
     		.setFooter("MysteryNation")
     		.setTimestamp();
 
-    		const member = new Discord.RichEmbed()
+    		const member1 = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователь ${member.user.tag} был кикнут модератором ${message.author.tag}, причина: "${reason}"`)
@@ -234,8 +234,8 @@ client.on("message", async message => {
 
     		message.channel.send({embed: channel}).catch(console.error);
       		message.author.send({embed: author}).catch(console.error);
-      		message.member.send({embed: member}).catch(console.error);
-      		client.channels.get("123123").send({embed: modlog}).catch(console.error);
+      		message.member.send({embed: member1}).catch(console.error);
+      		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
    }
   if(command === "ban") {
     if(!message.member.roles.some(r=>["Модератор"].includes(r.name)) )
@@ -271,7 +271,7 @@ client.on("message", async message => {
     		.setFooter("MysteryNation")
     		.setTimestamp();
 
-    		const member = new Discord.RichEmbed()
+    		const member1 = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователь ${member.user.tag} был забанен модератором ${message.author.tag}, причина: "${reason}"`)
@@ -287,8 +287,8 @@ client.on("message", async message => {
 
     		message.channel.send({embed: channel}).catch(console.error);
       		message.author.send({embed: author}).catch(console.error);
-      		message.member.send({embed: member}).catch(console.error);
-      		client.channels.get("123123").send({embed: modlog}).catch(console.error);
+      		message.member.send({embed: member1}).catch(console.error);
+      		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
    }
    if (command === "eval") {
     if(message.author.id !== "178404926869733376") return message.channel.send({embed: {
@@ -329,7 +329,7 @@ client.on("message", async message => {
     		.setFooter("MysteryNation")
     		.setTimestamp();
 
-      		client.channels.get("123123").send({embed: modlog}).catch(console.error);
+      		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
       	}
 });
 
