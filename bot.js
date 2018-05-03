@@ -130,7 +130,7 @@ client.on("message", async message => {
     	message.channel.send({embed: channel});
     	client.channels.get("435060105487187968").send({embed: modlog});
 	} else if(command === "mute") {
-	    if(!message.member.roles.some(r=>["Модератор"].includes(r.name)) )
+	    if(!message.member.roles.some(r=>["Мл. Модератор", "Модератор"].includes(r.name)) )
           return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
