@@ -18,7 +18,17 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 	
 	// Game commands
-	if(command === "o") {
+	if(command === "mod") {
+    if (message.member.roles.has('441577566567006220')) {
+            message.member.removeRole('441577566567006220').catch();
+            message.channel.send(`Забираю роль Move or Die у ${message.author}`);
+            message.delete();
+        } else {
+            message.member.addRole('441577566567006220').catch();
+            message.channel.send(`Выдаю роль Move or Die для ${message.author}`);
+            message.delete();
+        }
+} else if(command === "o") {
     if (message.member.roles.has('440716806727139331')) {
             message.member.removeRole('440716806727139331').catch();
             message.channel.send(`Забираю роль osu! у ${message.author}`);
