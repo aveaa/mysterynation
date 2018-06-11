@@ -421,7 +421,7 @@ client.on("message", async message => {
 	message.author.send({embed: send});
 		message.channel.send({embed: okkkk});
 } else if(command === "invite") {
-	message.channel.send(`Ссылка на приглашение бота: https://discordapp.com/oauth2/authorize?client_id=440897025106509824&scope=bot&permissions=136`);
+	message.channel.send(`Ссылка на приглашение бота: https://discordapp.com/oauth2/authorize?client_id=455607886710571008&scope=bot&permissions=136`);
 	} else {
 	message.channel.send({embed: {
   color: 1111111,
