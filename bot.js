@@ -59,7 +59,7 @@ client.on("message", async message => {
 		message.author.send(`Доступные "моды" для команды ${process.env.PREFIX}osuuser:\n\nstd\ntaiko\nctb\nmania`);
 		message.reply(`проверьте свои личные сообщения.`);
 		
-		if( word[0] === process.env.PREFIX + 'osuuser') {
+		if (word[0] === process.env.PREFIX + 'osuuser') {
 			if (typeof word[1] === "undefined") {
 			message.channel.send({embed: {
   color: 1111111,
