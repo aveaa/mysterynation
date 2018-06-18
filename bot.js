@@ -71,17 +71,18 @@ client.on("message", async message => {
 		request('https://osu.ppy.sh/api/get_user?k=' + process.env.OSU_API_KEY + '&u=' + word[1] + '&m=' + gameModeNum(word[2]), function (error, response, body) {
 			//console.log(body);
 			var data = JSON.parse(body);
-			
-			var embed = new Discord.RichEmbed()
+			var embed = new Discord.RichEmbed();
+
 				.setTitle(data[0].username)
 				.setURL('https://osu.ppy.sh/u/'+data[0].user_id)
 				.setAuthor('osu! | Статистика игрока (Режим '+gameModeText(gameModeNum(word[2]))+')')
 				.setColor(0xFF1A8C)
 				.setThumbnail('https://a.ppy.sh/'+data[0].user_id)
 				.addField('Рейтинг', '#'+data[0].pp_rank+' ('+data[0].country+': #'+data[0].pp_country_rank+')')
-				.addField('PP', data[0].pp_raw+'')
+				.addField('PP', data[0].pp_raw)
 				.addField('Точность', (data[0].accuracy).substr(0, 5)+'%')
 				.addField('Кол-во игр', data[0].playcount);
+
 			message.channel.send({embed});
 		});
 	}
