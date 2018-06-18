@@ -462,7 +462,7 @@ client.on("message", async message => {
 'https://media.giphy.com/media/BXrwTdoho6hkQ/giphy.gif'];
     let item = items[Math.floor(Math.random()*items.length)];
     const embed = new Discord.RichEmbed()
-                .setTitle(`${message.author} обнял ${member.user}`)
+                .setTitle(`${message.author.tag} обнял ${member.user.tag}`)
                 .setImage(item)
                 .setFooter(client.user.tag);
             message.channel.send({embed});
