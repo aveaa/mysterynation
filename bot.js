@@ -1,11 +1,11 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-var setStatus = client.user.setStatus;
-var setPresence = client.user.setPresence;
-var setName = client.user.setUsername;
-var setAv = client.user.setStatus;
-var log = console.log;
+var setStatus = client.user.setStatus
+var setPresence = client.user.setPresence
+var setName = client.user.setUsername
+var setAv = client.user.setStatus
+var log = console.log
 
 client.on('ready', () => {
   setStatus('online');
