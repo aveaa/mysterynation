@@ -54,18 +54,13 @@ client.on('ready', () => {
 
 client.on("message", async message => {
   if(message.author.bot) return;
+	var word = message.content.split(" ");
 	if(message.content === process.env.DPREFIX + 'osumode') {
 		message.author.send(`Доступные "моды" для команды ${process.env.PREFIX}osuuser:\n\nstd\ntaiko\nctb\nmania`);
 		message.reply(`проверьте свои личные сообщения.`);
-	}
-  if(message.content.indexOf(process.env.PREFIX) !== 0) return;
-	var word = message.content.split(" ");
-  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
-	let ayy = client.emojis.get("456798209184890902");
-	
-	if(command === "osuuser") {
-		if (typeof word[1] === "undefined") {
+		
+		if( word[0] === process.env.PREFIX + 'osuuser') {
+			if (typeof word[1] === "undefined") {
 			message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
@@ -89,7 +84,13 @@ client.on("message", async message => {
 				.addField('Кол-во игр', data[0].playcount)
 			message.channel.send({embed});
 		});
-	} else if(command === "ping") {
+	}
+  if(message.content.indexOf(process.env.PREFIX) !== 0) return;
+  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+	let ayy = client.emojis.get("456798209184890902");
+	
+	if(command === "ping") {
     const m = await message.channel.send("Пинг?");
     m.edit(`Понг! Моя задержка: ${m.createdTimestamp - message.createdTimestamp}ms. Задержка API: ${Math.round(client.ping)}ms`);
     } else if(command === "help") {
@@ -504,12 +505,7 @@ client.on("message", async message => {
 } else if(command === "invite") {
 	message.channel.send(`Ссылка на приглашение бота: https://discordapp.com/oauth2/authorize?client_id=455607886710571008&scope=bot&permissions=136`);
 	} else {
-	message.channel.send({embed: {
-  color: 1111111,
-  title: "Ошибка:",
-  description: ayy + ` Данной команды не существует.`
-}});
-	}
+	console.log(`${message.author.tag} ввёл неверную команду.`);
 });
 
 client.login(process.env.BOT_TOKEN);
