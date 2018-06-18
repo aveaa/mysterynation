@@ -1,23 +1,17 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
-var setStatus = client.user.setStatus
-var setPresence = client.user.setPresence
-var setName = client.user.setUsername
-var setAv = client.user.setAvatar
-var log = console.log
-
 client.on('ready', () => {
-  setStatus('online');
-  setPresence({
+  client.user.setStatus('online');
+  client.user.setPresence({
 	  game: {
 		  name: `--help`,
 		  type: 1
 	  }
   });
-  setName('Акуму');
-  setAv('http://eclipsedev.cf/acumu.jpg');
-  log('Успешная авторизация.');
+  client.user.setUsername('Акуму');
+  client.user.setAvatar('http://eclipsedev.cf/acumu.jpg');
+  console.log('Успешная авторизация.');
 });
 
 client.on("message", async message => {
