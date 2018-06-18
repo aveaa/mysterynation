@@ -1,12 +1,23 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+var setStatus = client.user.setStatus;
+var setPresence = client.user.setPresence;
+var setName = client.user.setUsername;
+var setAv = client.user.setStatus;
+var log = console.log;
+
 client.on('ready', () => {
-  client.user.setStatus('online');
-  client.user.setPresence({ game: { name: `за попытками убить меня`, type: 3 } }).catch();
-  client.user.setUsername(`Акуму`);
-  client.user.setAvatar(`http://eclipsedev.cf/acumu.jpg`);
-  console.log('[Meow] Успешная авторизация.');
+  setStatus('online');
+  setPresence({
+	  game: {
+		  name: `--help`,
+		  type: 1
+	  }
+  });
+  setName('Акуму');
+  setAv('http://eclipsedev.cf/acumu.jpg');
+  log('Успешная авторизация.');
 });
 
 client.on("message", async message => {
@@ -72,7 +83,7 @@ client.on("message", async message => {
     if (err) return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
-  description: ayy + ` У вас нету прав для доступа к этой команде.\n\nЕсли вы считаете, что это не так, напишите <@178404926869733376>`
+  description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
 		let reason = args.slice(1).join(' ');
   		let member = message.mentions.members.first();
@@ -80,7 +91,6 @@ client.on("message", async message => {
   		if (message.mentions.users.size < 1) return message.reply('упоминание, -__-').catch(console.error);
                     let embed = new Discord.RichEmbed()
                         .setTitle('Предупреждение')
-                        // .setDescription(`**Пользователь:** ${user.user}\n**Модератор:** ${message.author}\n**Причина:**\n\n${reason}`)
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
                         .setFooter(client.user.tag);
@@ -96,7 +106,7 @@ client.on("message", async message => {
     if (err) return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
-  description: ayy + ` У вас нету прав для доступа к этой команде.\n\nЕсли вы считаете, что это не так, напишите <@178404926869733376>`
+  description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
 		let reason = args.slice(1).join(' ');
   		let member = message.mentions.members.first();
@@ -155,7 +165,7 @@ client.on("message", async message => {
     if (err) return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
-  description: ayy + ` У вас нету прав для доступа к этой команде.\n\nЕсли вы считаете, что это не так, напишите <@178404926869733376>`
+  description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
     let member = message.mentions.members.first();
     if(!member)
@@ -192,7 +202,7 @@ client.on("message", async message => {
     if (err) return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
-  description: ayy + ` У вас нету прав для доступа к этой команде.\n\nЕсли вы считаете, что это не так, напишите <@178404926869733376>`
+  description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
     
     let member = message.mentions.members.first();
@@ -249,7 +259,7 @@ client.on("message", async message => {
     if (err) return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
-  description: ayy + ` У вас нету прав для доступа к этой команде.\n\nЕсли вы считаете, что это не так, напишите <@178404926869733376>`
+  description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
    let member = message.mentions.members.first();
    if (!client.fetchUser(args[0])) return message.channel.send('Ошибка');
@@ -369,7 +379,7 @@ client.on("message", async message => {
             return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
-  description: ayy + ` Вы не упомянули пользователя.\n\nЕсли вы считаете, что это не так, напишите <@178404926869733376>`
+  description: `Использование команды: ${process.env.PREFIX}avatar [@упоминание]`
 }});
             const embed = new Discord.RichEmbed()
                 .setTitle(`Аватарка пользователя ${member.user.tag}`)
@@ -387,7 +397,7 @@ client.on("message", async message => {
     if (err) return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
-  description: ayy + ` У вас нету прав для доступа к этой команде.\n\nЕсли вы считаете, что это не так, напишите <@178404926869733376>`
+  description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
 	const members = message.guild.members.filter(member => member.user.presence.game && /(discord\.(gg|io|me|li)\/.+|discordapp\.com\/invite\/.+)/i.test(member.user.presence.game.name));
 
