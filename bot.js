@@ -58,9 +58,13 @@ client.on("message", async message => {
 		message.author.send(`Доступные "моды" для команды ${process.env.PREFIX}osuuser:\n\nstd\ntaiko\nctb\nmania`);
 		message.reply(`проверьте свои личные сообщения.`);
 	}
+  if(message.content.indexOf(process.env.PREFIX) !== 0) return;
 	var word = message.content.split(" ");
-
-	if (word[0] === process.env.PREFIX + 'osuuser') { //!user {id} [mode=std]
+  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
+  const command = args.shift().toLowerCase();
+	let ayy = client.emojis.get("456798209184890902");
+	
+	if(command === "osuuser") {
 		if (typeof word[1] === "undefined") {
 			message.channel.send({embed: {
   color: 1111111,
@@ -76,26 +80,15 @@ client.on("message", async message => {
 			var embed = new Discord.RichEmbed()
 				.setTitle(data[0].username)
 				.setURL('https://osu.ppy.sh/u/'+data[0].user_id)
-				.setAuthor('osu! | Статистика игрока: '+gameModeText(gameModeNum(word[2])))
+				.setAuthor('osu! | Статистика игрока (Режим '+gameModeText(gameModeNum(word[2]))+')')
 				.setColor(0xFF1A8C)
 				.setThumbnail('https://a.ppy.sh/'+data[0].user_id)
-				.addField('Рейтинг', '#'+data[0].pp_rank)
-				.addField('('+data[0].country+': ','#'+data[0].pp_country_rank+')')
-				.addField('PP', data[0].pp_raw+' PP')
+				.addField('Рейтинг', '#'+data[0].pp_rank+' ('+data[0].country+': #'+data[0].pp_country_rank+')')
+				.addField('PP', data[0].pp_raw+'')
 				.addField('Точность', (data[0].accuracy).substr(0, 5)+'%')
 				.addField('Кол-во игр', data[0].playcount)
-			.addFooter(client.user.tag + ` | Кстати, у моего создателя есть аккаунт в osu! -> ${process.env.PREFIX}osuuser 11096400 std`);
-				
 			message.channel.send({embed});
 		});
-	}
-  if(message.content.indexOf(process.env.PREFIX) !== 0) return;
-  const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
-  const command = args.shift().toLowerCase();
-	let ayy = client.emojis.get("456798209184890902");
-	
-	if(command === "osuuser") {
-		console.log(`1`);
 	} else if(command === "ping") {
     const m = await message.channel.send("Пинг?");
     m.edit(`Понг! Моя задержка: ${m.createdTimestamp - message.createdTimestamp}ms. Задержка API: ${Math.round(client.ping)}ms`);
