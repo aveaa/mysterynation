@@ -1,5 +1,45 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const request = require('request');
+
+function gameModeNum(modetext) {
+	switch (modetext) {
+		case 'std':
+		case 's':
+		default:
+			return 0;
+			break;
+		case 'taiko':
+		case 't':
+			return 1;
+			break;
+		case 'ctb':
+		case 'c':
+			return 2;
+			break;
+		case 'mania':
+		case 'm':
+			return 3;
+			break;
+	}
+}
+function gameModeText(modenum) {
+	switch (modenum) {
+		case 0:
+		default:
+			return 'STD';
+			break;
+		case 1:
+			return 'Taiko';
+			break;
+		case 2:
+			return 'CtB';
+			break;
+		case 3:
+			return 'Mania';
+			break;
+	}	
+}
 
 client.on('ready', () => {
   client.user.setStatus('online');
@@ -9,13 +49,46 @@ client.on('ready', () => {
 		  type: 1
 	  }
   });
-  client.user.setUsername('Акуму');
-  client.user.setAvatar('http://eclipsedev.cf/acumu.jpg');
   console.log('Успешная авторизация.');
 });
 
 client.on("message", async message => {
   if(message.author.bot) return;
+	if(message.content === process.env.DPREFIX + 'osumode') {
+		message.author.send(`Доступные "моды" для команды ${process.env.PREFIX}osuuser:\n\nstd\ntaiko\nctb\mania`);
+		message.reply(`проверьте свои личные сообщения.`);
+	}
+	var word = message.content.split(" ");
+
+	if (word[0] === process.env.PREFIX + 'osuuser') { //!user {id} [mode=std]
+		if (typeof word[1] === "undefined") {
+			message.channel.send({embed: {
+  color: 1111111,
+  title: "Ошибка:",
+  description: `Использование команды: ${process.env.PREFIX}osuuser [ID] [MODE] <- ${process.env.DPREFIX}osumode`
+}});
+			return;
+		}
+		request('https://osu.ppy.sh/api/get_user?k=' + process.env.OSU_API_KEY + '&u=' + word[1] + '&m=' + gameModeNum(word[2]), function (error, response, body) {
+			//console.log(body);
+			var data = JSON.parse(body);
+			
+			var embed = new Discord.RichEmbed()
+				.setTitle(data[0].username)
+				.setURL('https://osu.ppy.sh/u/'+data[0].user_id)
+				.setAuthor('osu! | Статистика игрока: '+gameModeText(gameModeNum(word[2])))
+				.setColor(0xFF1A8C)
+				.setThumbnail('https://a.ppy.sh/'+data[0].user_id)
+				.addField('Рейтинг', '#'+data[0].pp_rank)
+				.addField('('+data[0].country+': ','#'+data[0].pp_country_rank+')')
+				.addField('PP', data[0].pp_raw+' PP')
+				.addField('Точность', (data[0].accuracy).substr(0, 5)+'%')
+				.addField('Кол-во игр', data[0].playcount)
+			.addField(client.user.tag + ` (Кстати, у моего создателя есть аккаунт в osu! -> ${process.env.PREFIX}osuuser 11096400 std)`);
+				
+			message.channel.send({embed});
+		});
+	}
   if(message.content.indexOf(process.env.PREFIX) !== 0) return;
   const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
@@ -53,7 +126,7 @@ client.on("message", async message => {
         value: "Выдать шутку"
       },
 {
-        name: `${process.env.PREFIX}avatar [@упоминание]`,
+        name: `${process.env.PREFIX}avatar`,
         value: "Выдать аватарку пользователя"
       },
 	     {
@@ -63,6 +136,14 @@ client.on("message", async message => {
 	     {
         name: `${process.env.PREFIX}invite`,
         value: "Выдать ссылку на приглашение бота"
+      },
+	     {
+        name: `${process.env.PREFIX}osuuser`,
+        value: "Увидеть информацию об аккаунте osu!игрока"
+      },
+	     {
+        name: `${process.env.PREFIX}hug`,
+        value: "Обнять пользователя"
       }
     ]
   }
@@ -367,6 +448,24 @@ client.on("message", async message => {
 'Табличка с надписью «Осторожно! Убьёт!» осторожно убила человека'];
     let item = items[Math.floor(Math.random()*items.length)];
     message.channel.send(item);
+   } else if(command === "hug") {
+	   let member = message.mentions.members.first();
+        if (!member)
+            return message.channel.send({embed: {
+  color: 1111111,
+  title: "Ошибка:",
+  description: `Использование команды: ${process.env.PREFIX}hug [@упоминание]`
+}});
+  	let items = ['https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif',
+        'https://media.giphy.com/media/143v0Z4767T15e/giphy.gif',
+        'https://media.giphy.com/media/qscdhWs5o3yb6/giphy.gif',
+'https://media.giphy.com/media/BXrwTdoho6hkQ/giphy.gif'];
+    let item = items[Math.floor(Math.random()*items.length)];
+    const embed = new Discord.RichEmbed()
+                .setTitle(`${message.author} обнял ${member.user}`)
+                .setImage(item)
+                .setFooter(client.user.tag);
+            message.channel.send({embed});
    } else if(command === "avatar") {
 		let member = message.mentions.members.first();
         if (!member)
