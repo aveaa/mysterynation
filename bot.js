@@ -81,7 +81,7 @@ client.on("message", async message => {
 				.addField('Рейтинг', '#'+data[0].pp_rank+' ('+data[0].country+': #'+data[0].pp_country_rank+')')
 				.addField('PP', data[0].pp_raw+'')
 				.addField('Точность', (data[0].accuracy).substr(0, 5)+'%')
-				.addField('Кол-во игр', data[0].playcount)
+				.addField('Кол-во игр', data[0].playcount);
 			message.channel.send({embed});
 		});
 	}
