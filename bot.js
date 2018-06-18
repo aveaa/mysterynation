@@ -1,12 +1,11 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const emojis = {error:'454975930922827786'};
 
 client.on('ready', () => {
   client.user.setStatus('online');
-  client.user.setPresence({ game: { name: `за тобой | ${process.env.PREFIX}help`, type: 3 } }).catch();
-  client.user.setUsername(`Meow`);
-  client.user.setAvatar(`https://cdn.discordapp.com/avatars/421030089732653057/84d590ce13493ed42abe6bc31e0eee9d.png?size=2048`);
+  client.user.setPresence({ game: { name: `за твоими попытками убить меня`, type: 3 } }).catch();
+  client.user.setUsername(`Акуму`);
+  client.user.setAvatar(`http://eclipsedev.cf/acumu.jpg`);
   console.log('[Meow] Успешная авторизация.');
 });
 
@@ -15,7 +14,7 @@ client.on("message", async message => {
   if(message.content.indexOf(process.env.PREFIX) !== 0) return;
   const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-	let ayy = client.emojis.get(emojis.error);
+	let ayy = client.emojis.get("456798209184890902");
 	
 	if(command === "ping") {
     const m = await message.channel.send("Пинг?");
@@ -79,27 +78,14 @@ client.on("message", async message => {
   		let member = message.mentions.members.first();
   		if (reason.length < 1) return message.reply('причина, -__-').catch(console.error);
   		if (message.mentions.users.size < 1) return message.reply('упоминание, -__-').catch(console.error);
-			let accepting = message.channel.send(`Вы уверены, что хотите выписать предупреждение пользователю?\n\n**Напишите \`да\`, чтобы подтведить.**`);
-        const collector = new Discord.MessageCollector(message.channel, m => m.author.id === message.author.id, { time: 60000 });
-        collector.on('collect', msg => {
-            if (['да', 'ага', 'кнш', 'конечно', 'конешно', 'давай', 'йес', 'yes', 'y', 'aga', 'go', 'da', 'го'].includes(msg.content.toLowerCase())) {
-                message.delete();
-                try {
                     let embed = new Discord.RichEmbed()
                         .setTitle('Предупреждение')
                         // .setDescription(`**Пользователь:** ${user.user}\n**Модератор:** ${message.author}\n**Причина:**\n\n${reason}`)
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
-                        .setFooter(client.user.Username);
+                        .setFooter(client.user.tag);
                     if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
                     message.channel.send(`${member.user}`, {embed}).then(() => {
-                        message.channel.stopTyping(true)
-                    });
-                } catch (Exception) {message.channel.send({embed: embed_error('Ошибка варна.')})}
-            }
-            console.log(collector);
-            collector.stop();
-        });
 	} else if(command === "mute") {
 	    let err = false;
     ['MANAGE_MESSAGES'].forEach(function (item) {
@@ -122,28 +108,28 @@ client.on("message", async message => {
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователю ${member.user.tag} был заблокирован чат модератором ${message.author.tag}, причина: ${reason}`)
-    		.setFooter(client.user.Username)
+    		.setFooter(client.user.tag)
     		.setTimestamp();
 
     		const modlog = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователю ${member.user.tag} был заблокирован чат модератором ${message.author.tag}, причина: ${reason}`)
-    		.setFooter(client.user.Username)
+    		.setFooter(client.user.tag)
     		.setTimestamp();
 
     		const channel1 = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователю ${member.user.tag} был разблокирован чат модератором ${message.author.tag}`)
-    		.setFooter(client.user.Username)
+    		.setFooter(client.user.tag)
     		.setTimestamp();
 
     		const modlog1 = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователю ${member.user.tag} был разблокирован чат модератором ${message.author.tag}`)
-    		.setFooter(client.user.Username)
+    		.setFooter(client.user.tag)
     		.setTimestamp();
 
   		if (!message.guild.me.hasPermission('MANAGE_ROLES')) return message.reply('У меня нету прав MANAGE_ROLES').catch(console.error);
@@ -185,14 +171,14 @@ client.on("message", async message => {
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователь ${member.user.tag} был кикнут модератором ${message.author.tag}, причина: "${reason}"`)
-    		.setFooter("MysteryNation")
+    		.setFooter(client.user.tag)
     		.setTimestamp();
 
     		const modlog = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователь ${member.user.tag} был кикнут модератором ${message.author.tag}, причина: "${reason}"`)
-    		.setFooter("MysteryNation")
+    		.setFooter(client.user.tag)
     		.setTimestamp();
 
     		message.channel.send({embed: channel}).catch(console.error);
@@ -225,14 +211,14 @@ client.on("message", async message => {
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователь ${member.user.tag} был забанен модератором ${message.author.tag}, причина: "${reason}"`)
-    		.setFooter("MysteryNation")
+    		.setFooter(client.user.tag)
     		.setTimestamp();
 
     		const modlog = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователь ${member.user.tag} был забанен модератором ${message.author.tag}, причина: "${reason}"`)
-    		.setFooter("MysteryNation")
+    		.setFooter(client.user.tag)
     		.setTimestamp();
 
     		message.channel.send({embed: channel}).catch(console.error);
@@ -240,7 +226,7 @@ client.on("message", async message => {
     if(message.author.id !== "178404926869733376") return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
-  description: ayy + ` У вас нету прав для доступа к этой команде.\n\nЕсли вы считаете, что это не так, напишите <@178404926869733376>`
+  description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
     try {
       var code = args.join(" ");
@@ -276,10 +262,10 @@ client.on("message", async message => {
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
     		.setDescription(`Пользователь ${member.user.tag} был забанен (по ID) модератором ${message.author.tag}, причина: "${reason}"`)
-    		.setFooter("MysteryNation")
+    		.setFooter(client.user.tag)
     		.setTimestamp();
 
-      		client.channels.get("435060105487187968").send({embed: modlog}).catch(console.error);
+      		message.channel.send({embed: modlog}).catch(console.error);
    } else if(command === "joke") {
   	let items = ['Падает комп с виндой с 16-го этажа и думает: Вот сейчас бы зависнуть',
         'Ты кто по гороскопу?\n- Рыба\n- А я пиво',
@@ -376,10 +362,7 @@ client.on("message", async message => {
         'С улицы пришёл кусок грязи, утверждает, что мой ребёнок',
 'Табличка с надписью «Осторожно! Убьёт!» осторожно убила человека'];
     let item = items[Math.floor(Math.random()*items.length)];
-    message.channel.send({embed: {
-  color: 3447003,
-  description: item
-}});
+    message.channel.send(item);
    } else if(command === "avatar") {
 		let member = message.mentions.members.first();
         if (!member)
@@ -391,7 +374,7 @@ client.on("message", async message => {
             const embed = new Discord.RichEmbed()
                 .setTitle(`Аватарка пользователя ${member.user.tag}`)
                 .setImage(member.user.avatarURL)
-                .setFooter(client.user.Username)
+                .setFooter(client.user.tag)
                 .setDescription('Если изображение не загружается, тыкните на него');
             message.channel.send({embed});
 } else if(command === "checkinvite") {
@@ -411,12 +394,12 @@ client.on("message", async message => {
 		const send = new Discord.RichEmbed()
             .setTitle('Проверка ссылки в статусе:')
             .setDescription(members.map(member => `\`${member.id}\` ${member.displayName}`).join("\n") || "Никто не имеет ссылки на приглашение в качестве названия игры.")
-            .setFooter(client.user.Username);
+            .setFooter(client.user.tag);
 		
 		const okkkk = new Discord.RichEmbed()
             .setTitle('Уведомление:')
             .setDescription(`${message.author}, проверьте свои личные сообщения`)
-            .setFooter(client.user.Username);
+            .setFooter(client.user.tag);
 		
 	message.author.send({embed: send});
 		message.channel.send({embed: okkkk});
@@ -432,4 +415,3 @@ client.on("message", async message => {
 });
 
 client.login(process.env.BOT_TOKEN);
-process.env.BOT_TOKEN = process.env.POSLANIYE
