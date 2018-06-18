@@ -506,6 +506,6 @@ client.on("message", async message => {
 	message.channel.send(`Ссылка на приглашение бота: https://discordapp.com/oauth2/authorize?client_id=455607886710571008&scope=bot&permissions=136`);
 	} else {
 	console.log(`${message.author.tag} ввёл неверную команду.`);
+	}
 });
-
 client.login(process.env.BOT_TOKEN);
