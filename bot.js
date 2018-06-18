@@ -85,7 +85,7 @@ client.on("message", async message => {
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
                         .setFooter(client.user.tag);
                     if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
-                    message.channel.send(`${member.user}`, {embed}).then(() => {
+                    message.channel.send({embed});
 	} else if(command === "mute") {
 	    let err = false;
     ['MANAGE_MESSAGES'].forEach(function (item) {
