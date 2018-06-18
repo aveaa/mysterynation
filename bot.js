@@ -1,45 +1,5 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
-const request = require('request');
-
-function gameModeNum(modetext) {
-	switch (modetext) {
-		case 'std':
-		case 's':
-		default:
-			return 0;
-			break;
-		case 'taiko':
-		case 't':
-			return 1;
-			break;
-		case 'ctb':
-		case 'c':
-			return 2;
-			break;
-		case 'mania':
-		case 'm':
-			return 3;
-			break;
-	}
-}
-function gameModeText(modenum) {
-	switch (modenum) {
-		case 0:
-		default:
-			return 'STD';
-			break;
-		case 1:
-			return 'Taiko';
-			break;
-		case 2:
-			return 'CtB';
-			break;
-		case 3:
-			return 'Mania';
-			break;
-	}	
-}
 
 client.on('ready', () => {
   client.user.setStatus('online');
@@ -54,38 +14,6 @@ client.on('ready', () => {
 
 client.on("message", async message => {
   if(message.author.bot) return;
-	var word = message.content.split(" ");
-	if(message.content === process.env.DPREFIX + 'osumode') {
-		message.author.send(`Доступные "моды" для команды ${process.env.PREFIX}osuuser:\n\nstd\ntaiko\nctb\nmania`);
-		message.reply(`проверьте свои личные сообщения.`);
-	}
-		if (word[0] === process.env.PREFIX + 'osuuser') {
-			if (typeof word[1] === "undefined") {
-			message.channel.send({embed: {
-  color: 1111111,
-  title: "Ошибка:",
-  description: `Использование команды: ${process.env.PREFIX}osuuser [ID] [MODE] | ${process.env.DPREFIX}osumode`
-}});
-			return;
-		}
-		request('https://osu.ppy.sh/api/get_user?k=' + process.env.OSU_API_KEY + '&u=' + word[1] + '&m=' + gameModeNum(word[2]), function (error, response, body) {
-			//console.log(body);
-			var data = JSON.parse(body);
-			var embed = new Discord.RichEmbed();
-
-				.setTitle(data[0].username)
-				.setURL('https://osu.ppy.sh/u/'+data[0].user_id)
-				.setAuthor('osu! | Статистика игрока (Режим '+gameModeText(gameModeNum(word[2]))+')')
-				.setColor(0xFF1A8C)
-				.setThumbnail('https://a.ppy.sh/'+data[0].user_id)
-				.addField('Рейтинг', '#'+data[0].pp_rank+' ('+data[0].country+': #'+data[0].pp_country_rank+')')
-				.addField('PP', data[0].pp_raw)
-				.addField('Точность', (data[0].accuracy).substr(0, 5)+'%')
-				.addField('Кол-во игр', data[0].playcount);
-
-			message.channel.send({embed});
-		});
-	}
   if(message.content.indexOf(process.env.PREFIX) !== 0) return;
   const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
@@ -135,12 +63,12 @@ client.on("message", async message => {
         value: "Выдать ссылку на приглашение бота"
       },
 	     {
-        name: `${process.env.PREFIX}osuuser`,
-        value: "Увидеть информацию об аккаунте osu!игрока"
-      },
-	     {
         name: `${process.env.PREFIX}hug`,
         value: "Обнять пользователя"
+      },
+	     {
+        name: `${process.env.PREFIX}kiss`,
+        value: "Поцеловать пользователя"
       }
     ]
   }
@@ -460,6 +388,24 @@ client.on("message", async message => {
     let item = items[Math.floor(Math.random()*items.length)];
     const embed = new Discord.RichEmbed()
                 .setTitle(`${message.author.tag} обнял ${member.user.tag}`)
+                .setImage(item)
+                .setFooter(client.user.tag);
+            message.channel.send({embed});
+   } else if(command === "kiss") {
+	   let member = message.mentions.members.first();
+        if (!member)
+            return message.channel.send({embed: {
+  color: 1111111,
+  title: "Ошибка:",
+  description: `Использование команды: ${process.env.PREFIX}kiss [@упоминание]`
+}});
+  	let items = ['https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif',
+        'https://media.giphy.com/media/zkppEMFvRX5FC/giphy.gif',
+        'https://media.giphy.com/media/oHZPerDaubltu/giphy.gif',
+'https://media.giphy.com/media/dP8ONh1mN8YWQ/giphy.gif'];
+    let item = items[Math.floor(Math.random()*items.length)];
+    const embed = new Discord.RichEmbed()
+                .setTitle(`${message.author.tag} поцеловал ${member.user.tag}`)
                 .setImage(item)
                 .setFooter(client.user.tag);
             message.channel.send({embed});
