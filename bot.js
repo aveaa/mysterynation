@@ -55,7 +55,7 @@ client.on('ready', () => {
 client.on("message", async message => {
   if(message.author.bot) return;
 	if(message.content === process.env.DPREFIX + 'osumode') {
-		message.author.send(`Доступные "моды" для команды ${process.env.PREFIX}osuuser:\n\nstd\ntaiko\nctb\mania`);
+		message.author.send(`Доступные "моды" для команды ${process.env.PREFIX}osuuser:\n\nstd\ntaiko\nctb\nmania`);
 		message.reply(`проверьте свои личные сообщения.`);
 	}
 	var word = message.content.split(" ");
