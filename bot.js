@@ -65,7 +65,7 @@ client.on("message", async message => {
 			message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
-  description: `Использование команды: ${process.env.PREFIX}osuuser [ID] [MODE] <- ${process.env.DPREFIX}osumode`
+  description: `Использование команды: ${process.env.PREFIX}osuuser [ID] [MODE] | ${process.env.DPREFIX}osumode`
 }});
 			return;
 		}
@@ -84,7 +84,7 @@ client.on("message", async message => {
 				.addField('PP', data[0].pp_raw+' PP')
 				.addField('Точность', (data[0].accuracy).substr(0, 5)+'%')
 				.addField('Кол-во игр', data[0].playcount)
-			.addField(client.user.tag + ` (Кстати, у моего создателя есть аккаунт в osu! -> ${process.env.PREFIX}osuuser 11096400 std)`);
+			.addFooter(client.user.tag + ` | Кстати, у моего создателя есть аккаунт в osu! -> ${process.env.PREFIX}osuuser 11096400 std`);
 				
 			message.channel.send({embed});
 		});
@@ -94,7 +94,9 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 	let ayy = client.emojis.get("456798209184890902");
 	
-	if(command === "ping") {
+	if(command === "osuuser") {
+		console.log(`1`);
+	} else if(command === "ping") {
     const m = await message.channel.send("Пинг?");
     m.edit(`Понг! Моя задержка: ${m.createdTimestamp - message.createdTimestamp}ms. Задержка API: ${Math.round(client.ping)}ms`);
     } else if(command === "help") {
