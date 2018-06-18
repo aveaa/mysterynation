@@ -3,7 +3,7 @@ const client = new Discord.Client();
 
 client.on('ready', () => {
   client.user.setStatus('online');
-  client.user.setPresence({ game: { name: `за твоими попытками убить меня`, type: 3 } }).catch();
+  client.user.setPresence({ game: { name: `за попытками убить меня`, type: 3 } }).catch();
   client.user.setUsername(`Акуму`);
   client.user.setAvatar(`http://eclipsedev.cf/acumu.jpg`);
   console.log('[Meow] Успешная авторизация.');
