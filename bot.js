@@ -46,6 +46,10 @@ client.on("message", async message => {
         name: `${process.env.PREFIX}idban [ID]`,
         value: "Забанить пользователя (по ID)"
       },
+	     {
+        name: `${process.env.PREFIX}idunban [ID]`,
+        value: "Разбанить пользователя (по ID)"
+      },
 {
         name: `${process.env.PREFIX}joke`,
         value: "Выдать шутку"
@@ -232,6 +236,12 @@ client.on("message", async message => {
     		.setTimestamp();
 
     		message.channel.send({embed: channel}).catch(console.error);
+   } else if(command === "unban") {
+	   message.channel.send({embed: {
+  color: 1111111,
+  title: "Ошибка:",
+  description: ayy + ` Неплохо. Но это не так работает. >> --idunban [ID]`
+}});
    } else if(command === "eval") {
     if(message.author.id !== "178404926869733376") return message.channel.send({embed: {
   color: 1111111,
@@ -271,7 +281,34 @@ client.on("message", async message => {
     		const modlog = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
-    		.setDescription(`Пользователь ${member.user.tag} был забанен (по ID) модератором ${message.author.tag}, причина: "${reason}"`)
+    		.setDescription(`Пользователь ${member.user.tag} был забанен (по ID) модератором ${message.author.tag}`)
+    		.setFooter(client.user.tag)
+    		.setTimestamp();
+
+      		message.channel.send({embed: modlog}).catch(console.error);
+   } else if (command === "idunban") {
+   let err = false;
+    ['BAN_MEMBERS'].forEach(function (item) {
+                if (!message.member.hasPermission(item, false, true, true)) {
+                    err = true;
+                }
+            });
+    if (err) return message.channel.send({embed: {
+  color: 1111111,
+  title: "Ошибка:",
+  description: ayy + ` У вас нету прав для доступа к этой команде.`
+}});
+   let member = message.mentions.members.first();
+   if (!client.fetchUser(args[0])) return message.channel.send('Ошибка');
+    user = args[0];
+    message.guild.unban(args[0])
+        .then(user => console.log(`Пользователь ${user.username || user.id || user} в гильдии ${message.guild.name} был успешно разбанен.`))
+        .catch(console.error);
+
+    		const modlog = new Discord.RichEmbed()
+    		.setTitle('Предупреждение:')
+    		.setColor("#ee83ac")
+    		.setDescription(`Пользователь ${member.user.tag} был разбанен (по ID) модератором ${message.author.tag}`)
     		.setFooter(client.user.tag)
     		.setTimestamp();
 
