@@ -17,7 +17,7 @@ client.on("message", async message => {
   if(message.content.indexOf(process.env.PREFIX) !== 0) return;
   const args = message.content.slice(process.env.PREFIX.length).trim().split(/ +/g);
   const command = args.shift().toLowerCase();
-	let ayy = client.emojis.get("456798209184890902");
+	let ayy = client.emojis.get("458543533868056577");
 	
 	if(command === "waifu") {
   	let items = ['http://eclipsedev.cf/img/nya/1.jpg', 'http://eclipsedev.cf/img/nya/2.jpg', 'http://eclipsedev.cf/img/nya/3.jpg', 'http://eclipsedev.cf/img/nya/4.jpg', 'http://eclipsedev.cf/img/nya/5.jpg', 'http://eclipsedev.cf/img/nya/6.jpg', 'http://eclipsedev.cf/img/nya/7.jpg', 'http://eclipsedev.cf/img/nya/8.jpg', 'https://pp.userapi.com/c834203/v834203782/1108ef/LiRMsL_nnLE.jpg', 'https://pp.userapi.com/c841523/v841523428/215f0/FF8t57wG5p8.jpg', 'https://pp.userapi.com/c847220/v847220978/2f43e/ZijJ4cbVve4.jpg', 'https://pp.userapi.com/c847218/v847218201/3f6ee/U1xr8Vb_t7E.jpg', 'https://pp.userapi.com/c845020/v845020487/47d53/im0qyQ0H2ow.jpg', 'https://pp.userapi.com/c824602/v824602630/12bd58/Gaoy8CGcsnw.jpg', 'https://sun1-3.userapi.com/c840426/v840426086/80afb/VBZXzo7wJUI.jpg'];
