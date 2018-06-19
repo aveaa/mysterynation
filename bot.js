@@ -236,7 +236,7 @@ bot.on("message", message => {
 	if(message.channel.type === "dm" && message.author.id !== bot.user.id) { //Message received by DM
 		//Check that the DM was not send by the bot to prevent infinite looping
 		console.log(`21121`);
-	} else if(message.channel.type === "text" && message.channel.name === text_channel.name) { //Message received on desired text channel
+	} else if(message.channel.type === "text") { //Message received on desired text channel
 		if(message.isMentioned(bot.user)) {
 			message.reply(mention_text);
 		} else {
