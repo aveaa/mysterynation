@@ -241,7 +241,7 @@ bot.on("message", message => {
 			message.reply(mention_text);
 		} else {
 			var message_text = message.content;
-			if(message_text[0] == '-@') { //Command issued
+			if(message_text[0] == '-^') { //Command issued
 				handle_command(message, message_text.substring(1));
 			}
 		}
@@ -385,9 +385,9 @@ exports.run = function(server_name, text_channel_name, voice_channel_name, alias
 
 		console.log("Connected!");
 	});
-
-	bot.login(token);
 }
+
+bot.login(token);
 
 client.on("message", async message => {
   if(message.author.bot) return;
