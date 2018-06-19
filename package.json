@@ -10,6 +10,8 @@
     "discord.js": "11.3.0",
     "request": "2.81.0",
     "rgbcolor": "1.0.1",
-    "get-image-colors": "1.8.1"
+    "get-image-colors": "1.8.1",
+    "ytdl-core": "^0.7.21",
+    "node-opus": "^0.2.4"
   }
 }
