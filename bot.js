@@ -431,7 +431,7 @@ message.author.send({embed});
   title: "Ошибка:",
   description: `Использование команды: ${process.env.PREFIX}hug [@упоминание]`
 }});
-	   if (!member.id === "455607886710571008")
+	   if (!member === client.user)
             return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
@@ -455,7 +455,7 @@ message.author.send({embed});
   title: "Ошибка:",
   description: `Использование команды: ${process.env.PREFIX}kiss [@упоминание]`
 }});
-	   if (!member.id === "455607886710571008")
+	   if (!member === client.user)
             return message.channel.send({embed: {
   color: 1111111,
   title: "Ошибка:",
