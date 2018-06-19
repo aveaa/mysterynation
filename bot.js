@@ -1,5 +1,221 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+const bot = new Discord.Client({autoReconnect: true, max_message_cache: 0});
+const fs = require("fs");
+const ytdl = require("ytdl-core");
+
+var aliases_file_path = "aliases.json";
+
+var stopped = false;
+var inform_np = true;
+
+var now_playing_data = {};
+var queue = [];
+var aliases = {};
+
+var voice_connection = null;
+var voice_handler = null;
+var text_channel = null;
+
+var commands = [
+
+	{
+		command: "stop",
+		description: "Останавливает плэйлист",
+		parameters: [],
+		execute: function(message, params) {
+			if(stopped) {
+				message.reply("Плэйлист уже остановлен!");
+			} else {
+				stopped = true;
+				if(voice_handler !== null) {
+					voice_handler.end();
+				}
+				message.reply("Стоп!");
+			}
+		}
+	},
+	
+	{
+		command: "resume",
+		description: "Продолжает плэйлист",
+		parameters: [],
+		execute: function(message, params) {
+			if(stopped) {
+				stopped = false;
+				if(!is_queue_empty()) {
+					play_next_song();
+				}
+			} else {
+				message.reply("Плэйлист уже продолжен");
+			}
+		}
+	},
+
+	{
+		command: "request",
+		description: "Добавляет URL видео в очередь",
+		parameters: ["video URL, ID or alias"],
+		execute: function(message, params) {
+			add_to_queue(params[1], message);
+		}
+	},
+
+	{
+		command: "np",
+		description: "Показывает текущую песню",
+		parameters: [],
+		execute: function(message, params) {
+
+			var response = "Сейчас играет: ";
+			if(is_bot_playing()) {
+				response += "\"" + now_playing_data["title"] + "\" (requested by " + now_playing_data["user"] + ")";
+			} else {
+				response += "nothing!";
+			}
+
+			message.reply(response);
+		}
+	},
+
+	{
+		command: "setnp",
+		description: "Устанавливает режим показа текущей песни после конца",
+		parameters: ["on/off"],
+		execute: function(message, params) {
+
+			if(params[1].toLowerCase() == "on") {
+				var response = "Вы включили уведомление";
+				inform_np = true;
+			} else if(params[1].toLowerCase() == "off") {
+				var response = "Вы выключили уведомление";
+				inform_np = false;
+			} else {
+				var response = "Простите?";
+			}
+			
+			message.reply(response);
+		}
+	},
+
+	{
+		command: "commands",
+		description: "Показывает команды",
+		parameters: [],
+		execute: function(message, params) {
+			var response = "Доступные команды:";
+			
+			for(var i = 0; i < commands.length; i++) {
+				var c = commands[i];
+				response += "\n!" + c.command;
+				
+				for(var j = 0; j < c.parameters.length; j++) {
+					response += " <" + c.parameters[j] + ">";
+				}
+				
+				response += ": " + c.description;
+			}
+			
+			message.reply(response);
+		}
+	},
+
+	{
+		command: "skip",
+		description: "Пропускает песню",
+		parameters: [],
+		execute: function(message, params) {
+			if(voice_handler !== null) {
+				message.reply("Пропуск...");
+				voice_handler.end();
+			} else {
+				message.reply("Сейчас ничего не играет. Тьфу.");
+			}
+		}
+	},
+
+	{
+		command: "queue",
+		description: "Показывает очередь",
+		parameters: [],
+		execute: function(message, params) {
+			var response = "";
+	
+			if(is_queue_empty()) {
+				response = "Очередь пустая.";
+			} else {
+				for(var i = 0; i < queue.length; i++) {
+					response += "\"" + queue[i]["title"] + "\" (requested by " + queue[i]["user"] + ")\n";
+				}
+			}
+			
+			message.reply(response);
+		}
+	},
+
+	{
+		command: "clearqueue",
+		description: "Очищает очередь",
+		parameters: [],
+		execute: function(message, params) {
+			queue = [];
+			message.reply("Очередь очищена");
+		}
+	},
+	
+	{
+		command: "aliases",
+		description: "Displays the stored aliases",
+		parameters: [],
+		execute: function(message, params) {
+
+			var response = "Current aliases:";
+			
+			for(var alias in aliases) {
+				if(aliases.hasOwnProperty(alias)) {
+					response += "\n" + alias + " -> " + aliases[alias];
+				}
+			}
+			
+			message.reply(response);
+		}
+	},
+	
+	{
+		command: "setalias",
+		description: "Sets an alias, overriding the previous one if it already exists",
+		parameters: ["alias", "video URL or ID"],
+		execute: function(message, params) {
+
+			var alias = params[1].toLowerCase();
+			var val = params[2];
+			
+			aliases[alias] = val;
+			fs.writeFileSync(aliases_file_path, JSON.stringify(aliases));
+			
+			message.reply("Alias " + alias + " -> " + val + " set successfully.");
+		}
+	},
+	
+	{
+		command: "deletealias",
+		description: "Deletes an existing alias",
+		parameters: ["alias"],
+		execute: function(message, params) {
+
+			var alias = params[1].toLowerCase();
+
+			if(!aliases.hasOwnProperty(alias)) {
+				message.reply("Alias " + alias + " does not exist");
+			} else {
+				delete aliases[alias];
+				fs.writeFileSync(aliases_file_path, JSON.stringify(aliases));
+				message.reply("Alias \"" + alias + "\" deleted successfully.");
+			}
+		}
+	},
+	
+];
 
 client.on('ready', () => {
   client.user.setStatus('online');
@@ -11,6 +227,167 @@ client.on('ready', () => {
   });
   console.log('Успешная авторизация.');
 });
+
+bot.on("disconnect", event => {
+	console.log("Disconnected: " + event.reason + " (" + event.code + ")");
+});
+
+bot.on("message", message => {
+	if(message.channel.type === "dm" && message.author.id !== bot.user.id) { //Message received by DM
+		//Check that the DM was not send by the bot to prevent infinite looping
+		console.log(`21121`);
+	} else if(message.channel.type === "text" && message.channel.name === text_channel.name) { //Message received on desired text channel
+		if(message.isMentioned(bot.user)) {
+			message.reply(mention_text);
+		} else {
+			var message_text = message.content;
+			if(message_text[0] == '-@') { //Command issued
+				handle_command(message, message_text.substring(1));
+			}
+		}
+	}
+});
+
+function add_to_queue(video, message) {
+
+	if(aliases.hasOwnProperty(video.toLowerCase())) {
+		video = aliases[video.toLowerCase()];
+	}
+
+	var video_id = get_video_id(video);
+
+	ytdl.getInfo("https://www.youtube.com/watch?v=" + video_id, (error, info) => {
+		if(error) {
+			message.reply("The requested video could not be found.");
+		} else {
+			queue.push({title: info["title"], id: video_id, user: message.author.username});
+			message.reply('"' + info["title"] + '" has been added to the queue.');
+			if(!stopped && !is_bot_playing() && queue.length === 1) {
+				play_next_song();
+			}
+		}
+	});
+}
+
+function play_next_song() {
+	if(is_queue_empty()) {
+		text_channel.sendMessage("The queue is empty!");
+	}
+
+	var video_id = queue[0]["id"];
+	var title = queue[0]["title"];
+	var user = queue[0]["user"];
+
+	now_playing_data["title"] = title;
+	now_playing_data["user"] = user;
+
+	if(inform_np) {
+		text_channel.sendMessage('Now playing: "' + title + '" (requested by ' + user + ')');
+	}
+
+	var audio_stream = ytdl("https://www.youtube.com/watch?v=" + video_id);
+	voice_handler = voice_connection.playStream(audio_stream);
+
+	voice_handler.once("end", reason => {
+		voice_handler = null;
+		if(!stopped && !is_queue_empty()) {
+			play_next_song();
+		}
+	});
+
+	queue.splice(0,1);
+}
+
+function search_command(command_name) {
+	for(var i = 0; i < commands.length; i++) {
+		if(commands[i].command == command_name.toLowerCase()) {
+			return commands[i];
+		}
+	}
+
+	return false;
+}
+
+function handle_command(message, text) {
+	var params = text.split(" ");
+	var command = search_command(params[0]);
+
+	if(command) {
+		if(params.length - 1 < command.parameters.length) {
+			message.reply("Insufficient parameters!");
+		} else {
+			command.execute(message, params);
+		}
+	}
+}
+
+function is_queue_empty() {
+	return queue.length === 0;
+}
+
+function is_bot_playing() {
+	return voice_handler !== null;
+}
+
+function get_video_id(string) {
+	var searchToken = "?v=";
+	var i = string.indexOf(searchToken);
+	
+	if(i == -1) {
+		searchToken = "&v=";
+		i = string.indexOf(searchToken);
+	}
+	
+	if(i == -1) {
+		searchToken = "youtu.be/";
+		i = string.indexOf(searchToken);
+	}
+	
+	if(i != -1) {
+		var substr = string.substring(i + searchToken.length);
+		var j = substr.indexOf("&");
+		
+		if(j == -1) {
+			j = substr.indexOf("?");
+		}
+		
+		if(j == -1) {
+			return substr;
+		} else {
+			return substr.substring(0,j);
+		}
+	}
+	
+	return string;
+}
+
+exports.run = function(server_name, text_channel_name, voice_channel_name, aliases_path, token) {
+
+	aliases_file_path = aliases_path;
+
+	bot.on("ready", () => {
+		var server = bot.guilds.find("name", server_name);
+		var voice_channel = server.channels.find("name", voice_channel_name); //The voice channel the bot will connect to
+		text_channel = server.channels.find("name", text_channel_name); //The text channel the bot will use to announce stuff
+		voice_channel.join().then(connection => {voice_connection = connection;}).catch(console.error);
+
+		fs.access(aliases_file_path, fs.F_OK, (err) => {
+			if(err) {
+				aliases = {};
+			} else {
+				try {
+					aliases = JSON.parse(fs.readFileSync(aliases_file_path));
+				} catch(err) {
+					aliases = {};
+				}
+			}
+		});
+
+		console.log("Connected!");
+	});
+
+	bot.login(token);
+}
 
 client.on("message", async message => {
   if(message.author.bot) return;
