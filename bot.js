@@ -387,8 +387,6 @@ exports.run = function(server_name, text_channel_name, voice_channel_name, alias
 	});
 }
 
-bot.login(token);
-
 client.on("message", async message => {
   if(message.author.bot) return;
   if(message.content.indexOf(process.env.PREFIX) !== 0) return;
@@ -871,3 +869,4 @@ client.on("message", async message => {
 });
 
 client.login(process.env.BOT_TOKEN);
+bot.login(process.env.BOT_TOKEN);
