@@ -431,6 +431,12 @@ message.author.send({embed});
   title: "Ошибка:",
   description: `Использование команды: ${process.env.PREFIX}hug [@упоминание]`
 }});
+	   if (!member.id === "455607886710571008")
+            return message.channel.send({embed: {
+  color: 1111111,
+  title: "Ошибка:",
+  description: `Ити накуй)`
+}});
   	let items = ['https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif',
         'https://media.giphy.com/media/143v0Z4767T15e/giphy.gif',
         'https://media.giphy.com/media/qscdhWs5o3yb6/giphy.gif',
@@ -448,6 +454,12 @@ message.author.send({embed});
   color: 1111111,
   title: "Ошибка:",
   description: `Использование команды: ${process.env.PREFIX}kiss [@упоминание]`
+}});
+	   if (!member.id === "455607886710571008")
+            return message.channel.send({embed: {
+  color: 1111111,
+  title: "Ошибка:",
+  description: `Ити накуй)`
 }});
   	let items = ['https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif',
         'https://media.giphy.com/media/zkppEMFvRX5FC/giphy.gif',
