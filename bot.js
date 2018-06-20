@@ -142,6 +142,8 @@ message.author.send({embed});
           ADD_REACTIONS: false
         });
       });
+    }catch(e){
+    console.log(e.stack);
     }
 		}
   		if(reason.length < 1) return message.reply('причина, -__-').catch(console.error);
