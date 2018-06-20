@@ -12,6 +12,24 @@ client.on('ready', () => {
   console.log('Успешная авторизация.');
 });
 
+client.on("guildCreate", () => {
+    try{
+      muteRole = await message.guild.createRole({
+        name: "Muted",
+        color: "#1a1a1a",
+        permissions:[]
+      })
+      message.guild.channels.forEach(async (channel, id) => {
+        await channel.overwritePermissions(muteRole, {
+          SEND_MESSAGES: false,
+          ADD_REACTIONS: false
+        });
+      });
+    }catch(e){
+      console.log(e.stack);
+    }
+});
+
 client.on("message", async message => {
   if(message.author.bot) return;
   if(message.content.indexOf(process.env.PREFIX) !== 0) return;
@@ -110,9 +128,9 @@ message.author.send({embed});
                         .setTitle('Предупреждение')
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
-		    .addField('Тип команды', `Варн`, true)
-                        .setFooter(client.user.tag);
-                    if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
+		        .addField('Тип команды', `Варн`, true)
+                        .setFooter(client.user.tag)
+                        .addField('Причина', `${reason}`);
                     message.channel.send({embed});
 	} else if(command === "mute") {
 	    let err = false;
@@ -128,25 +146,8 @@ message.author.send({embed});
 }});
 		let reason = args.slice(1).join(' ');
   		let member = message.mentions.members.first();
-  		let muteRole = message.guild.roles.find('name', '[EclipseIDE] Muted');
-  		if(!muteRole) return message.reply('Я не могу найти роль "[EclipseIDE] Muted"').catch(console.error);
-		if(!muteRole){
-    try{
-      muteRole = await message.guild.createRole({
-        name: "[EclipseIDE] Muted",
-        color: "#1a1a1a",
-        permissions:[]
-      })
-      message.guild.channels.forEach(async (channel, id) => {
-        await channel.overwritePermissions(muteRole, {
-          SEND_MESSAGES: false,
-          ADD_REACTIONS: false
-        });
-      });
-    }catch(e){
-      console.log(e.stack);
-    }
-  }
+  		let muteRole = message.guild.roles.find('name', 'Muted');
+  		if(!muteRole) return message.reply('Я не могу найти роль "Muted"').catch(console.error);
   		if(reason.length < 1) return message.reply('причина, -__-').catch(console.error);
   		if(message.mentions.users.size < 1) return message.reply('упоминание, -__-').catch(console.error);
 		
@@ -154,17 +155,17 @@ message.author.send({embed});
                         .setTitle('Предупреждение:')
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
-		.addField('Тип команды:', `Мут`, true)
-                        .setFooter(client.user.tag);
-                    if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
+		        .addField('Тип команды:', `Мут`, true)
+                        .setFooter(client.user.tag)
+                        .addField('Причина', `${reason}`);
 		
 		let embed1 = new Discord.RichEmbed()
                         .setTitle('Предупреждение:')
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
-		.addField('Тип команды:', `Размут`, true)
-                        .setFooter(client.user.tag);
-                    if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
+		        .addField('Тип команды:', `Размут`, true)
+                        .setFooter(client.user.tag)
+                        .addField('Причина', `${reason}`);
 		
   		const channel = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
@@ -234,9 +235,9 @@ message.author.send({embed});
                         .setTitle('Предупреждение')
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
-		    .addField('Тип команды', `Кик`, true)
-                        .setFooter(client.user.tag);
-                    if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
+		        .addField('Тип команды', `Кик`, true)
+                        .setFooter(client.user.tag)
+                        .addField('Причина', `${reason}`);
 		
 	const channel = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
@@ -283,9 +284,9 @@ message.author.send({embed});
                         .setTitle('Предупреждение')
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
-		    .addField('Тип команды', `Бан`, true)
-                        .setFooter(client.user.tag);
-                    if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
+		        .addField('Тип команды', `Бан`, true)
+                        .setFooter(client.user.tag)
+                        .addField('Причина', `${reason}`);
 	   
 	const channel = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
