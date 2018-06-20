@@ -103,7 +103,6 @@ message.author.send({embed});
   description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
 		let reason = args.slice(1).join(' ');
-			if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты чего? Я не буду его варнить.");
   		let member = message.mentions.members.first();
   		if (reason.length < 1) return message.reply('причина, -__-').catch(console.error);
   		if (message.mentions.users.size < 1) return message.reply('упоминание, -__-').catch(console.error);
@@ -150,8 +149,6 @@ message.author.send({embed});
   }
   		if(reason.length < 1) return message.reply('причина, -__-').catch(console.error);
   		if(message.mentions.users.size < 1) return message.reply('упоминание, -__-').catch(console.error);
-		if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты чего? Я не буду его мутить.");
-		if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("ты чего? Я не буду его мутить.");
 		
 		let embed = new Discord.RichEmbed()
                         .setTitle('Предупреждение:')
@@ -228,10 +225,6 @@ message.author.send({embed});
     if(!member.kickable) 
       return message.reply("я не могу кикнуть его(её), у меня есть хоть права?");
     let reason = args.slice(1).join(' ');
-if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты чего? Я не буду его кикать.");
-		if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("ты чего? Я не буду его кикать.");
-		if(!message.member.hasPermission("KICK_MEMBERS")) return message.reply("ты чего? Я не буду его кикать.");
-		if(!message.member.hasPermission("BAN_MEMBERS")) return message.reply("ты чего? Я не буду его кикать.");
     if(!reason)
       return message.reply("а причину написать?");
     await member.kick(reason)
@@ -274,9 +267,6 @@ if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты ч
 }});
     
     let member = message.mentions.members.first();
-	   if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты чего? Я не буду его банить.");
-	   if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("ты чего? Я не буду его банить.");
-	   if(!message.member.hasPermission("BAN_MEMBERS")) return message.reply("ты чего? Я не буду его банить.");
     if(!member)
       return message.reply("вы не сказали кого забанить");
     if(!member.bannable) 
@@ -348,9 +338,6 @@ if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты ч
   description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
    let member = message.mentions.members.first();
-	   if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты чего? Я не буду его банить.");
-	   if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("ты чего? Я не буду его банить.");
-	   if(!message.member.hasPermission("BAN_MEMBERS")) return message.reply("ты чего? Я не буду его банить.");
    if (!client.fetchUser(args[0])) return message.channel.send('Ошибка');
     user = args[0];
     message.guild.ban(args[0])
