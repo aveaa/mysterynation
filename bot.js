@@ -129,7 +129,8 @@ message.author.send({embed});
 		let reason = args.slice(1).join(' ');
   		let member = message.mentions.members.first();
   		let muteRole = message.guild.roles.find('name', 'Muted');
-  		if(!muteRole) return try {
+  		if(!muteRole) {
+			try{
       muteRole = await message.guild.createRole({
         name: "Muted",
         color: "#1a1a1a",
@@ -142,6 +143,7 @@ message.author.send({embed});
         });
       });
     }
+		}
   		if(reason.length < 1) return message.reply('причина, -__-').catch(console.error);
   		if(message.mentions.users.size < 1) return message.reply('упоминание, -__-').catch(console.error);
 		
