@@ -12,24 +12,6 @@ client.on('ready', () => {
   console.log('Успешная авторизация.');
 });
 
-client.on("guildCreate", () => {
-    try{
-      muteRole = await message.guild.createRole({
-        name: "Muted",
-        color: "#1a1a1a",
-        permissions:[]
-      })
-      message.guild.channels.forEach(async (channel, id) => {
-        await channel.overwritePermissions(muteRole, {
-          SEND_MESSAGES: false,
-          ADD_REACTIONS: false
-        });
-      });
-    }catch(e){
-      console.log(e.stack);
-    }
-});
-
 client.on("message", async message => {
   if(message.author.bot) return;
   if(message.content.indexOf(process.env.PREFIX) !== 0) return;
@@ -147,7 +129,19 @@ message.author.send({embed});
 		let reason = args.slice(1).join(' ');
   		let member = message.mentions.members.first();
   		let muteRole = message.guild.roles.find('name', 'Muted');
-  		if(!muteRole) return message.reply('Я не могу найти роль "Muted"').catch(console.error);
+  		if(!muteRole) return try {
+      muteRole = await message.guild.createRole({
+        name: "Muted",
+        color: "#1a1a1a",
+        permissions:[]
+      })
+      message.guild.channels.forEach(async (channel, id) => {
+        await channel.overwritePermissions(muteRole, {
+          SEND_MESSAGES: false,
+          ADD_REACTIONS: false
+        });
+      });
+    }
   		if(reason.length < 1) return message.reply('причина, -__-').catch(console.error);
   		if(message.mentions.users.size < 1) return message.reply('упоминание, -__-').catch(console.error);
 		
