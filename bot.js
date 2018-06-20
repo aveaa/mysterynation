@@ -103,6 +103,7 @@ message.author.send({embed});
   description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
 		let reason = args.slice(1).join(' ');
+			if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты чего? Я не буду его варнить.");
   		let member = message.mentions.members.first();
   		if (reason.length < 1) return message.reply('причина, -__-').catch(console.error);
   		if (message.mentions.users.size < 1) return message.reply('упоминание, -__-').catch(console.error);
@@ -110,6 +111,7 @@ message.author.send({embed});
                         .setTitle('Предупреждение')
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
+		    .addField('Тип команды', `Варн`, true)
                         .setFooter(client.user.tag);
                     if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
                     message.channel.send({embed});
@@ -127,10 +129,46 @@ message.author.send({embed});
 }});
 		let reason = args.slice(1).join(' ');
   		let member = message.mentions.members.first();
-  		let muteRole = message.guild.roles.find('name', 'Muted');
-  		if (!muteRole) return message.reply('Я не могу найти роль Muted').catch(console.error);
-  		if (reason.length < 1) return message.reply('причина, -__-').catch(console.error);
-  		if (message.mentions.users.size < 1) return message.reply('упоминание, -__-').catch(console.error);
+  		let muteRole = message.guild.roles.find('name', '[EclipseIDE] Muted');
+  		if(!muteRole) return message.reply('Я не могу найти роль "[EclipseIDE] Muted"').catch(console.error);
+		if(!muteRole){
+    try{
+      muteRole = await message.guild.createRole({
+        name: "[EclipseIDE] Muted",
+        color: "#1a1a1a",
+        permissions:[]
+      })
+      message.guild.channels.forEach(async (channel, id) => {
+        await channel.overwritePermissions(muteRole, {
+          SEND_MESSAGES: false,
+          ADD_REACTIONS: false
+        });
+      });
+    }catch(e){
+      console.log(e.stack);
+    }
+  }
+  		if(reason.length < 1) return message.reply('причина, -__-').catch(console.error);
+  		if(message.mentions.users.size < 1) return message.reply('упоминание, -__-').catch(console.error);
+		if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты чего? Я не буду его мутить.");
+		if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("ты чего? Я не буду его мутить.");
+		
+		let embed = new Discord.RichEmbed()
+                        .setTitle('Предупреждение:')
+                        .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
+                        .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
+		.addField('Тип команды:', `Мут`, true)
+                        .setFooter(client.user.tag);
+                    if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
+		
+		let embed1 = new Discord.RichEmbed()
+                        .setTitle('Предупреждение:')
+                        .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
+                        .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
+		.addField('Тип команды:', `Размут`, true)
+                        .setFooter(client.user.tag);
+                    if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
+		
   		const channel = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
@@ -163,12 +201,12 @@ message.author.send({embed});
 
   		if (member.roles.has(muteRole.id)) {
     		member.removeRole(muteRole).then(() => {
-      		message.channel.send({embed: channel1}).catch(console.error);
+      		message.channel.send({embed: embed1}).catch(console.error);
     		})
     		.catch(e=>console.error("Невозможно размутить: " + e));
   		} else {
    	 		member.addRole(muteRole).then(() => {
-      		message.channel.send({embed: channel}).catch(console.error);
+      		message.channel.send({embed: embed}).catch(console.error);
     		})
     		.catch(e=>console.error("Невозможно выдать мут: " + e));
   		}
@@ -190,10 +228,23 @@ message.author.send({embed});
     if(!member.kickable) 
       return message.reply("я не могу кикнуть его(её), у меня есть хоть права?");
     let reason = args.slice(1).join(' ');
+if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты чего? Я не буду его кикать.");
+		if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("ты чего? Я не буду его кикать.");
+		if(!message.member.hasPermission("KICK_MEMBERS")) return message.reply("ты чего? Я не буду его кикать.");
+		if(!message.member.hasPermission("BAN_MEMBERS")) return message.reply("ты чего? Я не буду его кикать.");
     if(!reason)
       return message.reply("а причину написать?");
     await member.kick(reason)
       .catch(error => message.reply(`Прости, я не могу кикнуть: ${error}`));
+		
+		let embed = new Discord.RichEmbed()
+                        .setTitle('Предупреждение')
+                        .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
+                        .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
+		    .addField('Тип команды', `Кик`, true)
+                        .setFooter(client.user.tag);
+                    if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
+		
 	const channel = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
@@ -208,7 +259,7 @@ message.author.send({embed});
     		.setFooter(client.user.tag)
     		.setTimestamp();
 
-    		message.channel.send({embed: channel}).catch(console.error);
+    		message.channel.send({embed: embed}).catch(console.error);
    } else if(command === "ban") {
     let err = false;
     ['BAN_MEMBERS'].forEach(function (item) {
@@ -223,6 +274,9 @@ message.author.send({embed});
 }});
     
     let member = message.mentions.members.first();
+	   if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты чего? Я не буду его банить.");
+	   if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("ты чего? Я не буду его банить.");
+	   if(!message.member.hasPermission("BAN_MEMBERS")) return message.reply("ты чего? Я не буду его банить.");
     if(!member)
       return message.reply("вы не сказали кого забанить");
     if(!member.bannable) 
@@ -234,6 +288,15 @@ message.author.send({embed});
     
     await member.ban(reason)
       .catch(error => message.reply(`прости, я не могу забанить: ${error}`));
+	   
+	   let embed = new Discord.RichEmbed()
+                        .setTitle('Предупреждение')
+                        .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
+                        .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
+		    .addField('Тип команды', `Бан`, true)
+                        .setFooter(client.user.tag);
+                    if (reason !== null && typeof reason !== undefined && reason !== '') embed.addField('Причина', `${reason}`);
+	   
 	const channel = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
@@ -248,7 +311,7 @@ message.author.send({embed});
     		.setFooter(client.user.tag)
     		.setTimestamp();
 
-    		message.channel.send({embed: channel}).catch(console.error);
+    		message.channel.send({embed: embed}).catch(console.error);
    } else if(command === "unban") {
 	   message.channel.send({embed: {
   color: 1111111,
@@ -285,6 +348,9 @@ message.author.send({embed});
   description: ayy + ` У вас нету прав для доступа к этой команде.`
 }});
    let member = message.mentions.members.first();
+	   if(!message.member.hasPermission("ADMINISTRATOR")) return message.reply("ты чего? Я не буду его банить.");
+	   if(!message.member.hasPermission("MANAGE_MESSAGES")) return message.reply("ты чего? Я не буду его банить.");
+	   if(!message.member.hasPermission("BAN_MEMBERS")) return message.reply("ты чего? Я не буду его банить.");
    if (!client.fetchUser(args[0])) return message.channel.send('Ошибка');
     user = args[0];
     message.guild.ban(args[0])
@@ -301,7 +367,7 @@ message.author.send({embed});
       		message.channel.send({embed: modlog}).catch(console.error);
    } else if (command === "idunban") {
    let err = false;
-    ['BAN_MEMBERS'].forEach(function (item) {
+    ['ADMINISTRATOR'].forEach(function (item) {
                 if (!message.member.hasPermission(item, false, true, true)) {
                     err = true;
                 }
@@ -431,12 +497,6 @@ message.author.send({embed});
   title: "Ошибка:",
   description: `Использование команды: ${process.env.PREFIX}hug [@упоминание]`
 }});
-	   if (!member === client.user)
-            return message.channel.send({embed: {
-  color: 1111111,
-  title: "Ошибка:",
-  description: `Ити накуй)`
-}});
   	let items = ['https://media.giphy.com/media/od5H3PmEG5EVq/giphy.gif',
         'https://media.giphy.com/media/143v0Z4767T15e/giphy.gif',
         'https://media.giphy.com/media/qscdhWs5o3yb6/giphy.gif',
@@ -454,12 +514,6 @@ message.author.send({embed});
   color: 1111111,
   title: "Ошибка:",
   description: `Использование команды: ${process.env.PREFIX}kiss [@упоминание]`
-}});
-	   if (!member === client.user)
-            return message.channel.send({embed: {
-  color: 1111111,
-  title: "Ошибка:",
-  description: `Ити накуй)`
 }});
   	let items = ['https://media.giphy.com/media/G3va31oEEnIkM/giphy.gif',
         'https://media.giphy.com/media/zkppEMFvRX5FC/giphy.gif',
