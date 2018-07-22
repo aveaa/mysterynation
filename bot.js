@@ -1,6 +1,8 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
 
+let strthink = client.emojis.get("423805450488643584");
+
 client.on('ready', () => {
   client.user.setStatus('online');
   client.user.setPresence({
@@ -19,8 +21,9 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 	let ayy = client.emojis.get("458543533868056577");
 	
+	// --waifu - показывает 8 рандомных тян
 	if(command === "waifu") {
-  	let items = ['http://eclipsedev.cf/img/nya/1.jpg', 'http://eclipsedev.cf/img/nya/2.jpg', 'http://eclipsedev.cf/img/nya/3.jpg', 'http://eclipsedev.cf/img/nya/4.jpg', 'http://eclipsedev.cf/img/nya/5.jpg', 'http://eclipsedev.cf/img/nya/6.jpg', 'http://eclipsedev.cf/img/nya/7.jpg', 'http://eclipsedev.cf/img/nya/8.jpg', 'https://pp.userapi.com/c834203/v834203782/1108ef/LiRMsL_nnLE.jpg', 'https://pp.userapi.com/c841523/v841523428/215f0/FF8t57wG5p8.jpg', 'https://pp.userapi.com/c847220/v847220978/2f43e/ZijJ4cbVve4.jpg', 'https://pp.userapi.com/c847218/v847218201/3f6ee/U1xr8Vb_t7E.jpg', 'https://pp.userapi.com/c845020/v845020487/47d53/im0qyQ0H2ow.jpg', 'https://pp.userapi.com/c824602/v824602630/12bd58/Gaoy8CGcsnw.jpg', 'https://sun1-3.userapi.com/c840426/v840426086/80afb/VBZXzo7wJUI.jpg'];
+  	let items = ['http://eclipsedev.cf/img/nya/1.jpg', 'http://eclipsedev.cf/img/nya/2.jpg', 'http://eclipsedev.cf/img/nya/3.jpg', 'http://eclipsedev.cf/img/nya/4.jpg', 'http://eclipsedev.cf/img/nya/5.jpg', 'http://eclipsedev.cf/img/nya/6.jpg', 'http://eclipsedev.cf/img/nya/7.jpg', 'http://eclipsedev.cf/img/nya/8.jpg'];
     let item = items[Math.floor(Math.random()*items.length)];
     const embed = new Discord.RichEmbed()
                 .setTitle(`Только никому про это. :0`)
@@ -28,9 +31,13 @@ client.on("message", async message => {
                 .setFooter(client.user.tag)
 message.author.send({embed});
 		message.channel.send(`Тсс, ${message.author}.. Загляни в ЛС.`);
+		
+		// --ping - ну а тут понятно что это
 } else if(command === "ping") {
     const m = await message.channel.send("Пинг?");
     m.edit(`Понг! Моя задержка: ${m.createdTimestamp - message.createdTimestamp}ms. Задержка API: ${Math.round(client.ping)}ms`);
+	
+	// --help - ???
     } else if(command === "help") {
 		message.reply('проверьте свои личные сообщения..');
         message.author.send({embed: {
@@ -90,6 +97,8 @@ message.author.send({embed});
     ]
   }
 });
+	    
+	    // --warn - крч, читайте код команды --help
 		} else if(command === "warn") {
 	    let err = false;
     ['MANAGE_MESSAGES'].forEach(function (item) {
@@ -111,8 +120,8 @@ message.author.send({embed});
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
 		        .addField('Тип команды', `Варн`, true)
-                        .setFooter(client.user.tag)
-                        .addField('Причина', `${reason}`);
+		    .addField('Причина', `${reason}`, true)
+                        .setFooter(client.user.tag);
                     message.channel.send({embed});
 	} else if(command === "mute") {
 	    let err = false;
@@ -154,16 +163,16 @@ message.author.send({embed});
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
 		        .addField('Тип команды:', `Мут`, true)
-                        .setFooter(client.user.tag)
-                        .addField('Причина', `${reason}`);
+		.addField('Причина', `${reason}`, true)
+                        .setFooter(client.user.tag);
 		
 		let embed1 = new Discord.RichEmbed()
                         .setTitle('Предупреждение:')
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
 		        .addField('Тип команды:', `Размут`, true)
-                        .setFooter(client.user.tag)
-                        .addField('Причина', `${reason}`);
+		.addField('Причина', `${reason}`, true)
+                        .setFooter(client.user.tag);
 		
   		const channel = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
@@ -234,8 +243,8 @@ message.author.send({embed});
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
 		        .addField('Тип команды', `Кик`, true)
-                        .setFooter(client.user.tag)
-                        .addField('Причина', `${reason}`);
+		.addField('Причина', `${reason}`, true)
+                        .setFooter(client.user.tag);
 		
 	const channel = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
@@ -283,8 +292,8 @@ message.author.send({embed});
                         .addField('Пользователь', `${member.user} (\`${member.user.tag}\`)`, true)
                         .addField('Модератор', `${message.author} (\`${message.author.tag}\`)`, true)
 		        .addField('Тип команды', `Бан`, true)
-                        .setFooter(client.user.tag)
-                        .addField('Причина', `${reason}`);
+	   .addField('Причина', `${reason}`, true)
+                        .setFooter(client.user.tag);
 	   
 	const channel = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
@@ -346,7 +355,7 @@ message.author.send({embed});
     		const modlog = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
-    		.setDescription(`Пользователь ${member.user.tag} был забанен (по ID) модератором ${message.author.tag}`)
+    		.setDescription(`Пользователь <@${args[0]}> (${args[0]}) был забанен модератором ${message.author.tag}`)
     		.setFooter(client.user.tag)
     		.setTimestamp();
 
@@ -373,7 +382,7 @@ message.author.send({embed});
     		const modlog = new Discord.RichEmbed()
     		.setTitle('Предупреждение:')
     		.setColor("#ee83ac")
-    		.setDescription(`Пользователь ${member.user.tag} был разбанен (по ID) модератором ${message.author.tag}`)
+    		.setDescription(`Пользователь <@${args[0]}> (${args[0]}) был разбанен модератором ${message.author.tag}`)
     		.setFooter(client.user.tag)
     		.setTimestamp();
 
@@ -554,8 +563,10 @@ message.author.send({embed});
 } else if(command === "invite") {
 	message.channel.send(`Ссылка на приглашение бота: https://discordapp.com/oauth2/authorize?client_id=455607886710571008&scope=bot&permissions=136`);
 	} else {
-	client.channels.get("455824800154255370").send(`${message.author.tag} на сервере ${message.guild.name} ввёл неверную команду.`);
+	client.channels.get("455824800154255370").send(`${message.author.tag} на сервере ${message.guild.name} ввёл неверную команду: ${message.content}`);
 	}
 });
 
 client.login(process.env.BOT_TOKEN);
+
+process.env.BOT_TOKEN = "А зачем вам токен? " + strthink
