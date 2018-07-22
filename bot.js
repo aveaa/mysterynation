@@ -4,10 +4,9 @@ const client = new Discord.Client();
 let strthink = client.emojis.get("423805450488643584");
 
 client.on('ready', () => {
-  client.user.setStatus('online');
   client.user.setPresence({
 	  game: {
-		  name: `--help`,
+		  name: `${process.env.PREFIX}help`,
 		  type: 1
 	  }
   });
