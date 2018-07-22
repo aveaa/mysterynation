@@ -19,9 +19,9 @@ dbl.on('error', e => {
 }); */
 
 client.on('ready', () => {
-    setInterval(() => {
+    /* setInterval(() => {
         dbl.postStats(client.guilds.size, client.shards.Id, client.shards.total);
-    }, 1800000);
+    }, 1800000); */
   client.user.setPresence({
 	  game: {
 		  name: `${process.env.PREFIX}help`,
