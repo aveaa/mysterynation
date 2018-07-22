@@ -585,4 +585,4 @@ message.author.send({embed});
 });
 
 client.login(process.env.BOT_TOKEN);
-process.env.BOT_TOKEN = "А зачем вам токен?"
+process.env.BOT_TOKEN = "MzkzMjI4NDE5NzQ5MzgwMDk3.o6hcF0.7UsbJcStn8wq9I71bSGUUJLpq9b"
