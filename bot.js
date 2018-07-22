@@ -1,13 +1,31 @@
 const Discord = require('discord.js');
 const client = new Discord.Client();
+/* const DBL = require("dblapi.js");
+const dbl = new DBL(process.env.DBL_TOKEN, { webhookPort: 5000, webhookAuth: 'password' });
 
-let strthink = client.emojis.get("423805450488643584");
+dbl.webhook.on('ready', hook => {
+  console.log(`[DBL] Webhook running at http://${hook.hostname}:${hook.port}${hook.path}`);
+});
+dbl.webhook.on('vote', vote => {
+  console.log(`[DBL] Пользователь с ID ${vote.user} проголосовал за бота`);
+});
+
+dbl.on('posted', () => {
+  console.log('[DBL] Кол-во серверов отправлено');
+});
+
+dbl.on('error', e => {
+ console.log(`[DBL] ERROR: ${e}`);
+}); */
 
 client.on('ready', () => {
+    setInterval(() => {
+        dbl.postStats(client.guilds.size, client.shards.Id, client.shards.total);
+    }, 1800000);
   client.user.setPresence({
 	  game: {
 		  name: `${process.env.PREFIX}help`,
-		  type: 1
+		  type: 3
 	  }
   });
   console.log('Успешная авторизация.');
@@ -567,5 +585,4 @@ message.author.send({embed});
 });
 
 client.login(process.env.BOT_TOKEN);
-
-process.env.BOT_TOKEN = "А зачем вам токен? " + strthink
+process.env.BOT_TOKEN = "А зачем вам токен?"
