@@ -12,6 +12,7 @@
     "rgbcolor": "1.0.1",
     "get-image-colors": "1.8.1",
     "ytdl-core": "^0.7.21",
-    "node-opus": "^0.2.4"
+    "node-opus": "^0.2.4",
+    /* "dblapi.js": "2.2.0" */
   }
 }
