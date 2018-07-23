@@ -5,6 +5,6 @@ Copyright 2018 © [EclipseHub](http://eclipsedev.cf/)<br>
 CC-BY-NC-SA<br>
 http://creativecommons.org/licenses/by-nc-sa/4.0/ <br><br>
 Для связи с автором вы можете использовать данные реквизиты:<br>
-Discord: Eclipse#5372 (или [через сервер](https://discord.gg/dD7Jujt))<br>
+Discord: sqdEclipse#5372<br>
 EMail: [cyphersky6018@yandex.ru](mailto:cyphersky6018@yandex.ru)<br>
-VK: https://vk.me/sqdeclipse<br><br>
+VK: https://vk.me/sqdeclipse_group<br><br>
