@@ -28,11 +28,11 @@ client.on("message", async message => {
             message.delete();
         }
 } else if(command === "english") {
-    if (message.member.roles.has('473391749381750784')) {
-            message.member.removeRole('473391749381750784').catch();
+    if (message.member.roles.has('473391718646153226')) {
+            message.member.removeRole('473391718646153226').catch();
             message.delete();
         } else {
-            message.member.addRole('473391749381750784').catch();
+            message.member.addRole('473391718646153226').catch();
             message.delete();
         }
 } else if(command === "waifu") {
