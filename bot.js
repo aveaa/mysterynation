@@ -19,8 +19,23 @@ client.on("message", async message => {
   const command = args.shift().toLowerCase();
 	let ayy = client.emojis.get("458543533868056577");
 	
-	// --waifu - показывает 8 рандомных тян
-	if(command === "waifu") {
+	if(command === "russian") {
+    if (message.member.roles.has('473391749381750784')) {
+            message.member.removeRole('473391749381750784').catch();
+            message.delete();
+        } else {
+            message.member.addRole('473391749381750784').catch();
+            message.delete();
+        }
+} else if(command === "english") {
+    if (message.member.roles.has('473391749381750784')) {
+            message.member.removeRole('473391749381750784').catch();
+            message.delete();
+        } else {
+            message.member.addRole('473391749381750784').catch();
+            message.delete();
+        }
+} else if(command === "waifu") {
   	let items = ['http://eclipsedev.cf/img/nya/1.jpg', 'http://eclipsedev.cf/img/nya/2.jpg', 'http://eclipsedev.cf/img/nya/3.jpg', 'http://eclipsedev.cf/img/nya/4.jpg', 'http://eclipsedev.cf/img/nya/5.jpg', 'http://eclipsedev.cf/img/nya/6.jpg', 'http://eclipsedev.cf/img/nya/7.jpg', 'http://eclipsedev.cf/img/nya/8.jpg'];
     let item = items[Math.floor(Math.random()*items.length)];
     const embed = new Discord.RichEmbed()
